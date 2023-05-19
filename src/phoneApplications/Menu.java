@@ -16,7 +16,7 @@ public class Menu {
 	public static void main(String[] args) {
 		
 		// Hello message
-		System.out.println("Welcome to our Phone Book application!!!");
+		System.out.println("Welcome to our Phone Book application!");
 		
 		// Create ContactList instance
 		ContactList ourList = new ContactList();
