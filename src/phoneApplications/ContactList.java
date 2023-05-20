@@ -33,10 +33,10 @@ public class ContactList {
 	}
 	
 	// Iterator
-	public ContactNode getIterator() {
+	public Iterator getIterator() {
 		
-		ContactNode temp = this.getHead();
-		return temp;		
+		Iterator iterator = this.contactList.iterator();
+		return iterator;		
 	}
 	
 	
