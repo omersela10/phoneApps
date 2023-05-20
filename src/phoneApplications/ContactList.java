@@ -15,13 +15,22 @@ public class ContactList {
 		
 		this.contactList = new ArrayList<Contact>();
 	}
-	
 
-	
 	// Methods : 
 	
 	// Add contact 
 	public void addContact(Contact anyContact) {
+		
+		// Check if any contact with this name already exist in the list.
+		for(Contact contact : this.contactList) {
+			
+			if(contact.getName().equals(anyContact.getName()) == true) {
+				
+				System.out.println("Contact " + anyContact.getName() + " already exist");
+				return;
+			}
+			
+		}
 		
 		// Build Contact
 		Contact newContact = new Contact(anyContact);
@@ -33,9 +42,9 @@ public class ContactList {
 	}
 	
 	// Iterator
-	public Iterator getIterator() {
+	public Iterator<Contact> getIterator() {
 		
-		Iterator iterator = this.contactList.iterator();
+		Iterator<Contact> iterator = this.contactList.iterator();
 		return iterator;		
 	}
 	
@@ -44,33 +53,20 @@ public class ContactList {
 	public void removeContact (String name) {
 		
 		boolean anyName = false;
-		
-		// Initialize iterator and previous to scan the list.
-		ContactNode iterator = this.getIterator();
-		ContactNode prev = null;
-		
-		while(iterator != null) {
+	
+		// Check if the contact exist an remove it.
+		for(Contact contact : this.contactList) {
 			
-			if(iterator.getContact().getName().equals(name) == true) {
-				
-				// Found
-
-				if(iterator.getContact().equals(this.getHead().getContact())) {
-					// It is the first in the list
-					this.setHead(iterator.getNext());
-				}
-				else {
-					// This is not the first, so previous is not null
-					prev.setNext(iterator.getNext());
-				}
-				
+			if(contact.getName().equals(name) == true) {
+				// Found and remove
 				anyName = true;
+				this.contactList.remove(contact);
+				
 				break;
 			}
-			// Update references
-			prev = iterator;
-			iterator = iterator.getNext();
+
 		}
+		
 		
 		// Print result
 		if (anyName == false) {
@@ -85,23 +81,12 @@ public class ContactList {
 	// Print list
 	public void printList () {
 		
-		System.out.println("The Phone Book: ");
-		
-		if(this.getHead() == null) {
-			// Notify if list empty
-			System.out.println("Phone Book is empty");
-			return;
-		}
-		
-		// Initialize iterator to scan the list.
-		ContactNode iterator = this.getIterator();
-		
-		while(iterator != null) {
+		// Print the list
+		for(Contact anyContact : this.contactList) {
 			
-			System.out.println(iterator.getContact());
-			// Update references.
-			iterator = iterator.getNext();
+			System.out.println(anyContact);
 		}
+		
 		
 	}
 	
@@ -109,20 +94,19 @@ public class ContactList {
 	public void searchByName (String name) {
 		
 		boolean exist = false;
-		// Initialize iterator to scan the list.
-		ContactNode iterator = this.getIterator();
 		
-		while(iterator != null) {
+		// Check if the contact exist an remove it.
+		for(Contact contact : this.contactList) {
 			
-			if(iterator.getContact().getName().equals(name) == true) {
+			if(contact.getName().equals(name) == true) {
 				
-				// Found.
-				System.out.println(iterator.getContact());
+				// Found and display
 				exist = true;
+				System.out.print(contact);
 			}
-			// Update references.
-			iterator = iterator.getNext();
+
 		}
+		
 		
 		if (exist == false) {
 			System.out.println( name + " does not in the contact list.");
@@ -130,128 +114,63 @@ public class ContactList {
 		
 	}
 	
-	// Sort List By name. Heap Sort
+	// Sort List By name.
 	public void sortListByName () {
 		
 		// Initialize the comparator 
 		ContactNameComparator sortByName = new ContactNameComparator();
+		
 		// Sort By name
-		this.sort(sortByName);
+		Collections.sort(this.contactList, sortByName);
 		
 		System.out.println("Phone book sorted by name.");
 	}
 	
-	// Sort List By Phone Number. Heap Sort
+	// Sort List By Phone Number.
 	public void sortListByPhoneNumber () {
 		
 		// Initialize the comparator
 		ContactPhoneComparator sortByPhone = new ContactPhoneComparator();
+		
 		// Sort By phone number
-		this.sort(sortByPhone);
+		Collections.sort(this.contactList, sortByPhone);
 		
 		System.out.println("Phone book sorted by phone.");
 	}
 	
-	// Generic HeapSort function O(n*log(n)), get the comparator object and sort - Strategy Design Pattern.
-	private void sort(Comparator<ContactNode> anyCompare) {
-		
-		// If the list empty, no need to sort.
-		if(this.getHead() == null) { 
-			 return;
-		}
-		
-		// Initialize the heap by the comparator.
-		PriorityQueue<ContactNode> heap = new PriorityQueue<ContactNode>(anyCompare);
-		
-		// Initialize the iterator
-		ContactNode iterator = this.getIterator();
-		
-		// Insert the contact to a priority queue.
-		while(iterator != null) {
-			
-			heap.add(iterator);
-			iterator = iterator.getNext();
-		}
-		
-		this.setHead(heap.poll());
-		iterator = this.getIterator();
-		
-		// Pop the contacts by name order and build the new sorted list.
-		while(heap.isEmpty() == false) {
-			
-			// Retrieve the top
-			ContactNode top = heap.poll();
-			
-			// Update list
-			iterator.setNext(top);
-			
-			// Update references.
-			iterator = iterator.getNext();
-		}
-		
-		// Set the last next to null;
-		iterator.setNext(null);
-	}
-	
+
 	// Remove duplicates in the list.
 	public void removeDuplicate () {
 		
 		// Initialize hash table to store which contact we already seen.
 		Map<Contact, Boolean> seen = new HashMap<Contact, Boolean>();
 		
-		// Initialize iterator and previous to scan the list.
-		ContactNode iterator = this.getIterator();
-		ContactNode prev = null;
+		// Initialize iterator.
+		Iterator<Contact> iterator = this.getIterator();
+	
 		
-		while(iterator != null) {
+		while(iterator.hasNext() == true) {
 			
-			ContactNode anyContactNode = iterator;
+			Contact cur = iterator.next();
 			
-			if (seen.containsKey(anyContactNode.getContact()) == true) {
-				// Previous not null because at first time we didn't see any duplicate so remove
-				prev.setNext(anyContactNode.getNext());
+			if (seen.containsKey(cur) == true) {
+				// See duplicate so remove
+				iterator.remove();
 			}
 			else {
 				// Insert to the hash if not seen already.
-				seen.put(anyContactNode.getContact(), true);
-				
-				// When no remove, Update previous reference
-				prev = iterator;
+				seen.put(cur, true);
 			}
 			
-			// Update references.
-			iterator = iterator.getNext();
 		}
 		
 		System.out.println("Duplicates removed.");
 	}
 
-	// Reverse list by recursion
-	private ContactNode reverse(ContactNode head) {
-		
-		// Initialize the new head reference.
-		ContactNode newHead = null;
-		
-		// Stopping condition
-		if(head == null || head.getNext() == null) {
-			return head;
-		}
-		
-		// Reach the last one and update recursively their next.
-		newHead = reverse(head.getNext());
-		head.getNext().setNext(head);
-		head.setNext(null);
-		
-		// The newHead reach the last one, so return it as new head.
-		return newHead;
-		
-	}
-	
 	// Reverse list function
 	public void reverse() {
 		
-		ContactNode iterator = this.getIterator();
-		this.setHead(this.reverse(iterator));
+		Collections.reverse(this.contactList);
 		
 		System.out.println("Phone book reversed.");
 	}
@@ -276,9 +195,8 @@ public class ContactList {
 	            String name = fields[0].substring(6);
 	            String phone = fields[1].substring(8);
 	            
-	            // Build new Contact and add to the list.
-	            Contact newContact = new Contact(name,phone);
-	            this.addContact(newContact);
+	            // Add to the list.
+	            this.addContact(new Contact(name,phone));
 	            
 	        }
 	        // Close file stream
@@ -304,14 +222,13 @@ public class ContactList {
             FileWriter writer = new FileWriter(file);
             
             // Initialize iterator to scan the list.
-            ContactNode iter = this.getIterator();
+            Iterator<Contact> iter = this.getIterator();
             
-            while(iter != null) {
+            while(iter.hasNext() == true) {
             	
             	// Write the Contact to file.
-                writer.write(iter.getContact().toString());
-                // Update reference.
-                iter = iter.getNext();
+                writer.write(iter.next().toString());
+   
             }
             
             // Close writer

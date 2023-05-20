@@ -2,22 +2,22 @@ package phoneApplications;
 import java.util.*;
 
 // Implements the interface comparator by Strategy Design Pattern
-public class ContactNameComparator implements Comparator<ContactNode> {
+public class ContactNameComparator implements Comparator<Contact> {
 
 	// Override compare to compare between two Contact by their name 
 	@Override
-	public int compare(ContactNode c1, ContactNode c2) {
+	public int compare(Contact c1, Contact c2) {
 		 
-		if (c1.getContact().getName().equals(c2.getContact().getName()) == true) {
+		if (c1.getName().equals(c2.getName()) == true) {
 			
 			// If they have the same name, compare by Bigger numeric Phone number
-			Integer c1PhoneInt = Integer.parseInt(c1.getContact().getPhoneNumber());
-			Integer c2PhoneInt = Integer.parseInt(c2.getContact().getPhoneNumber());
+			Long c1PhoneInt = Long.parseLong(c1.getPhoneNumber());
+			Long c2PhoneInt = Long.parseLong(c2.getPhoneNumber());
 			return c2PhoneInt.compareTo(c1PhoneInt);
 		}
 		else {
 			// Else - compare by Alphabetic order
-			return c1.getContact().getName().compareTo(c2.getContact().getName());
+			return c1.getName().compareTo(c2.getName());
 		}
 	}
 
