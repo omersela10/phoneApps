@@ -6,44 +6,30 @@ import java.io.*;
 public class ContactList {
 
 	// Data Members
-	private ContactNode headList;
-	private ArrayList<ContactNode> myList;
+
+	private ArrayList<Contact> contactList;
 	
 	
 	// Constructor
 	public ContactList() {
 		
-		this.headList = null;
+		this.contactList = new ArrayList<Contact>();
 	}
 	
-	// Getter
-	public ContactNode getHead() {
-		
-		return this.headList;
-	}
-	
-	// Setter
-	public void setHead(ContactNode newHead) {
-		
-		this.headList = newHead;
-	}
+
 	
 	// Methods : 
 	
 	// Add contact 
 	public void addContact(Contact anyContact) {
 		
-		// Build ContactNode
-		ContactNode newNode = new ContactNode(new Contact(anyContact));
+		// Build Contact
+		Contact newContact = new Contact(anyContact);
 		
-		this.myList.add(newNode);
-		
-		// Insert to the beginning, and update head.
-		newNode.setNext(this.getHead());
-		this.setHead(newNode);
+		this.contactList.add(newContact);
 		
 		// Notify upon insertion
-		System.out.println("Contact " + newNode.getContact() + "added.");
+		System.out.println("Contact " + newContact + "added.");
 	}
 	
 	// Iterator
