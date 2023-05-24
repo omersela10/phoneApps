@@ -1,5 +1,5 @@
 package phoneApplications;
-//Hello
+
 import java.util.*;
 import java.io.*;
 
@@ -91,7 +91,23 @@ public class ContactList {
 	}
 	
 	// Search for name in the Phone Book
-	public void searchByName (String name) {
+	//שיניתי לפונקציה שמחזירה ערך
+	public boolean searchByName (String name) {
+			
+			// Check if the contact exist an remove it.
+			for(Contact contact : this.contactList) {
+				
+				if(contact.getName().equals(name) == true) {
+					System.out.print(contact);
+					return true;
+				}
+	
+			}
+			System.out.println( name + " does not in the contact list.");
+			return false;
+			}
+		
+	/*public void searchByName (String name) {
 		
 		boolean exist = false;
 		
@@ -112,7 +128,7 @@ public class ContactList {
 			System.out.println( name + " does not in the contact list.");
 		}
 		
-	}
+	}*/
 	
 	// Sort List By name.
 	public void sortListByName () {

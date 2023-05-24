@@ -20,9 +20,10 @@ public class Menu {
 		
 		// Create ContactList instance
 		ContactList ourList = new ContactList();
+		Diary ourDiary = new Diary();
 		
 		// Start application
-		startApp(ourList);
+		startApp(ourList, ourDiary);
 		
 		return;
 	}
@@ -30,12 +31,30 @@ public class Menu {
 	
 		
 	// Print the menu and choose options.
-	public static void startApp (ContactList ourList) {
-
-		Scanner scanner = new Scanner(System.in);
+	public static void startApp (ContactList ourList, Diary ourDiary) {
+		Contact Shir = new Contact("Shir", "123");
+		ourList.addContact(Shir);
+		Contact Almog = new Contact("Almog", "456");
+		ourList.addContact(Almog);
+		Date newDate = new Date(2023,11,9);
+		MeetingEvent newMeetingEvent = new MeetingEvent(newDate, 30, Shir);
+		ourDiary.addEvent(newMeetingEvent, ourList);
+		//ourDiary.printDiary();
+		
+		newDate = new Date(2021,2,10);
+		GeneralEvent newGeneralEvent = new GeneralEvent(newDate, 15, "Wedding");
+		ourDiary.addEvent(newGeneralEvent, ourList);
+		ourDiary.printDiary();
+		
+		ourDiary.removeEvent(newMeetingEvent);
+		ourDiary.printDiary();
+		//System.out.println(newMeetingEvent.toString());
+	
+		
+		/*Scanner scanner = new Scanner(System.in);
 		
 		boolean exit = false;
-
+		
 	
 	    while (exit == false) {
 	    	 
@@ -74,6 +93,7 @@ public class Menu {
 				System.out.println("Enter name:");
 				name = scanner.nextLine();
 				ourList.searchByName(name);
+		
 				break;
 
 			    case "5":
@@ -120,7 +140,7 @@ public class Menu {
 				System.out.println("Invalid option. Try again.");
 			}
 
-		}
+		}*/
 	       
 	}
 	
