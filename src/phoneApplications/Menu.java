@@ -16,7 +16,7 @@ import java.io.*;
 public class Menu {
 
 	private static ContactList ourList;
-	private static DiaryManager ourDiary;
+	
 	public static void main(String[] args) {
 		
 		// Hello message
@@ -24,8 +24,7 @@ public class Menu {
 		
 		// Create ContactList instance
 	    ourList = new ContactList();
-		
-		
+	 
 		// Start application
 		startApp();
 		

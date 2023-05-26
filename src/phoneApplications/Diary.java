@@ -4,14 +4,14 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.time.*;
 
-public class DiaryManager
+public class Diary
 {
 	// Data Member
 	// Diary Holds Sorted Dates mapped to list of Events in this Date.
 	private TreeMap<LocalDate, ArrayList<Event>> diary;
 		
 	// Constructor
-	public DiaryManager() {
+	public Diary() {
 		this.diary = new TreeMap<LocalDate, ArrayList<Event>>();
 	}
 
@@ -20,18 +20,18 @@ public class DiaryManager
     // Add event
 	public void addEvent(Event newEvent) {
 		
-		// TODO : Add validate
 		// Retrieve the Date from the event
-		LocalDate newDate = newEvent.getDateTime().toLocalDate();
+		LocalDate newEventDate = newEvent.getDateTime().toLocalDate();
+		
 		// Check if there is any event in this date
-		if(this.diary.containsKey(newDate) == true) {
-			this.diary.get(newDate).add(newEvent);
+		if(this.diary.containsKey(newEventDate) == true) {
+			this.diary.get(newEventDate).add(newEvent);
 		}
 		else {
 			// Add new Date to the Diary and add this newEvent to this date.
 			ArrayList<Event> newEventList = new ArrayList<Event>();
 			newEventList.add(newEvent);
-			this.diary.put(newDate, newEventList);
+			this.diary.put(newEventDate, newEventList);
 		}
 		
 	}
@@ -45,7 +45,7 @@ public class DiaryManager
 		// Check if there if the Date exist in the Diary
 		if(this.diary.containsKey(dateOfEvent) == true) {
 			
-			// The Date exist, check if the event exist
+			// The Date exist, check if the event exist in this date
 			for(Event event : this.diary.get(dateOfEvent)) {
 				
 				if(event.equals(anyEvent) == true) {
@@ -83,7 +83,7 @@ public class DiaryManager
 		// Initialize the Iterator
 		Iterator<Entry<LocalDate, ArrayList<Event>>> iterator = this.diary.entrySet().iterator();
 		
-		while(iterator.hasNext()) {
+		while(iterator.hasNext() == true) {
 			
 			// Print all events on this date
 			printEventInDate(iterator.next().getKey());
@@ -92,7 +92,7 @@ public class DiaryManager
 	}
 	
 	// Sort by given date
-	private void sortByEvent(LocalDate anyDate) {
+	private void sortEventInDate(LocalDate anyDate) {
 		
 		// Check there is any event on this date
 		if(this.diary.containsKey(anyDate) == false) {
@@ -110,10 +110,10 @@ public class DiaryManager
 		// Initialize the comparator and Iterator
 		Iterator<Entry<LocalDate, ArrayList<Event>>> iterator = this.diary.entrySet().iterator();
 		
-		while(iterator.hasNext()) {
+		while(iterator.hasNext() == true) {
 			
 			// Sort The Events of any Date
-			sortByEvent(iterator.next().getKey());
+			sortEventInDate(iterator.next().getKey());
 		}
 				
 	}
@@ -122,7 +122,7 @@ public class DiaryManager
 	public void printCertainDatesEvents(LocalDate anyDate) {
 		
 		// Sort the events in the given date
-		this.sortByEvent(anyDate);
+		this.sortEventInDate(anyDate);
 		
 		// Print all events on this date
 		this.printEventInDate(anyDate);
@@ -160,21 +160,29 @@ public class DiaryManager
 	// Help method retrieve all events with some contact.
 	private ArrayList<Event> allEventsWithGivenContact(Contact anyContact) {
 		
+		boolean anyEvent = false;
 		// Initialize the Iterator
 		Iterator<Entry<LocalDate, ArrayList<Event>>> iterator = this.diary.entrySet().iterator();
 		
 		// Initialize the Array list that will contain the events with the given Contact
 		ArrayList<Event> allEventsOfSomeContact = new ArrayList<Event>();
 		
-		while(iterator.hasNext()) {
+		while(iterator.hasNext() == true) {
 			
-			// Add the events that has to the Contact in specific date. (concatenate).
-			allEventsOfSomeContact.addAll(allEventsOfContactInDate(iterator.next().getKey(), anyContact));
+			ArrayList<Event> allEventsOfSomeContactOfCurrentDate = allEventsOfContactInDate(iterator.next().getKey(), anyContact);
+			// Check if there is any event of this date that related to this contact
+			if(allEventsOfSomeContactOfCurrentDate != null) {
+				// Add the events that has to the Contact in specific date. (concatenate).
+				allEventsOfSomeContact.addAll(allEventsOfSomeContactOfCurrentDate);
+				anyEvent = true;
+			}
 		}
 		
-		// Initialize Comparator and sort
-		EventComparator sortEvents = new EventComparator();
-		Collections.sort(allEventsOfSomeContact,sortEvents);
+		if(anyEvent == true) {
+			// Initialize Comparator and sort
+			EventComparator sortEvents = new EventComparator();
+			Collections.sort(allEventsOfSomeContact,sortEvents);
+		}
 		
 		return allEventsOfSomeContact;
 		
@@ -182,8 +190,11 @@ public class DiaryManager
 	
 	// Print all events with some contact.
 	public void printAllEventsWithGivenContact(Contact anyContact) {
+		
+		// Get the all events of given contact
 		ArrayList<Event> allEventsOfSomeContact = allEventsWithGivenContact(anyContact);
 		
+		// Print this events.
 		for(Event event : allEventsOfSomeContact) {
 			System.out.println(event);
 		}

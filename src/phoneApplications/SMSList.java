@@ -2,12 +2,12 @@ package phoneApplications;
 
 import java.util.ArrayList;
 
-public class SMSManager {
+public class SMSList {
 
 	private ArrayList<SMS> smsList;
 
 	// Constructor:
-	public SMSManager() {
+	public SMSList() {
 		
 		this.smsList = new ArrayList<SMS>();
 	}
