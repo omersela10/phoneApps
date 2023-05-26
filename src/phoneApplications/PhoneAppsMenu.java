@@ -15,8 +15,8 @@ import java.io.*;
 
 public class PhoneAppsMenu{
 
-	private static ContactManager ourListManager;
-	//private static SMSManager ourSMSListManager;
+	private static PhoneBookManager ourPhoneBookManager;
+	//private static SMSManager ourSMSManager;
 	private static DiaryManager ourDiaryManager;
 	//private static MediaManager ourMediaManager;
 	
@@ -26,9 +26,13 @@ public class PhoneAppsMenu{
 		System.out.println("Welcome to our Phone Apps applications!");
 		
 		// Create ContactList instance
-		ourListManager = new ContactManager();
+		ourPhoneBookManager = new PhoneBookManager();
 		//ourSMSListManager = new SMSManager();
 		ourDiaryManager = new DiaryManager();
+		//ourMediaManager = new MediaManager();
+		
+		ourPhoneBookManager.registerObserver(ourDiaryManager);
+		//ourPhoneBookManager.registerObserver(ourSMSManager);
 		
 		// Start application
 		startApp();
@@ -57,7 +61,7 @@ public class PhoneAppsMenu{
 		    switch (option) {
 
 			    case "1":
-			    	ourListManager.startApp();
+			    	ourPhoneBookManager.startApp();
 			    	break;
 
 			    case "2":

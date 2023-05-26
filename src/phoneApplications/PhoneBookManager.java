@@ -2,17 +2,17 @@ package phoneApplications;
 
 import java.util.*;
 
-public class ContactManager implements AppHandler{
+public class PhoneBookManager implements AppHandler{
 
-	private static ContactList ourList;
+	private static ContactList phoneBook;
 	private ArrayList<ContactObserver> observers;
 
-	public static boolean IsContactExist(Contact anyContact) {
-		return ourList.searchByName(anyContact.getName());
+	public static boolean isContactExist(Contact anyContact) {
+		return phoneBook.searchByName(anyContact.getName());
 	}
 	
-	public ContactManager() {
-		ourList = new ContactList();
+	public PhoneBookManager() {
+		phoneBook = new ContactList();
 		this.observers = new ArrayList<ContactObserver>();
 	}
 	
@@ -34,79 +34,79 @@ public class ContactManager implements AppHandler{
 		    switch (option) {
 
 			    case "1":
-				// Add Contact
-				System.out.println("Enter name:");
-				String name = scanner.nextLine();
-				System.out.println("Enter phone number:");
-				String phone = scanner.nextLine();
-				
-				Contact newContact = new Contact(name, phone);
-				ourList.addContact(newContact);
-				break;
+					// Add Contact
+					System.out.println("Enter name:");
+					String name = scanner.nextLine();
+					System.out.println("Enter phone number:");
+					String phone = scanner.nextLine();
+					
+					Contact newContact = new Contact(name, phone);
+					phoneBook.addContact(newContact);
+					break;
 
 			    case "2":
-				// Remove contact
-				System.out.println("Enter name:");
-				name = scanner.nextLine();
-				Contact removedContact = ourList.removeContact(name);
-				this.notifyObservers(removedContact);
-				break;
+					// Remove contact
+					System.out.println("Enter name:");
+					name = scanner.nextLine();
+					Contact removedContact = phoneBook.removeContact(name);
+					this.notifyObservers(removedContact);
+					break;
 
 			    case "3":
-				// Print Phone Book
-				ourList.printList();
-				break;
+			    	// Print Phone Book
+			    	phoneBook.printList();
+			    	break;
 
 			    case "4":
-				// Search contact in the list.
-				System.out.println("Enter name:");
-				name = scanner.nextLine();
-				ourList.searchByName(name);
-		
+					// Search contact in the list.
+					System.out.println("Enter name:");
+					name = scanner.nextLine();
+					phoneBook.searchByName(name);
+			
 				break;
 
 			    case "5":
-				// Sort list by name
-				ourList.sortListByName();
-				break;
+			    	// Sort list by name
+			    	phoneBook.sortListByName();
+			    	break;
 
 			    case "6":
-				// Sort list by phone number
-				ourList.sortListByPhoneNumber();
-				break;
+			    	// Sort list by phone number
+			    	phoneBook.sortListByPhoneNumber();
+			    	break;
 
 			    case "7":
-				// Remove duplicates
-				ourList.removeDuplicate();
-				break;
+			    	// Remove duplicates
+			    	phoneBook.removeDuplicate();
+			    	break;
 
 			    case "8":
-				// Reverse list.
-				ourList.reverse();
-				break;
+			    	// Reverse list.
+			    	phoneBook.reverse();
+			    	break;
 
 			    case "9":
-				// Save Phone book to file
-				System.out.println("Enter file name:");
-				String filename = scanner.nextLine();
-				ourList.exportPhoneBook(filename);
-				break;
+					// Save Phone book to file
+					System.out.println("Enter file name:");
+					String filename = scanner.nextLine();
+					phoneBook.exportPhoneBook(filename);
+					break;
 
 			    case "10":
-				// Load and append from file.
-				System.out.println("Enter file name:");
-				filename = scanner.nextLine();
-				ourList.importAndAppendPhoneBook(filename);
-				break;
+					// Load and append from file.
+					System.out.println("Enter file name:");
+					filename = scanner.nextLine();
+					phoneBook.importAndAppendPhoneBook(filename);
+					break;
 
 			    case "11":
-				// Exit.
-				System.out.println("Exiting...");
-				exit = true;
-				break;
+					// Exit.
+					System.out.println("Exiting...");
+					exit = true;
+					break;
 
 			    default:
-				System.out.println("Invalid option. Try again.");
+			    	System.out.println("Invalid option. Try again.");
 			}
 
 		}

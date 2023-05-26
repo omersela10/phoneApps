@@ -5,12 +5,12 @@ import java.util.ArrayList;
 public class DiaryManager implements ContactObserver, AppHandler{
 	
 	// Data Member
-	private Diary ourDiary;
+	private Diary diary;
 	
 	// Constructor
 	public DiaryManager() {
 		
-		this.ourDiary = new Diary();
+		this.diary = new Diary();
 	}
 	
 	// Implement the On contact remove method - Observer Design Pattern
@@ -18,11 +18,11 @@ public class DiaryManager implements ContactObserver, AppHandler{
 	public void onContactRemoved(Contact anyContact) {
 		
 		// Get all events of the given contact
-		ArrayList<Event> allEventsOfGivenContact = ourDiary.allEventsWithGivenContact(anyContact);
+		ArrayList<Event> allEventsOfGivenContact = this.diary.allEventsWithGivenContact(anyContact);
 		
 		// Remove all events that related to this contact
 		for(Event event : allEventsOfGivenContact) {
-			ourDiary.removeEvent(event);
+			this.diary.removeEvent(event);
 		}
 	}
 	
@@ -30,7 +30,7 @@ public class DiaryManager implements ContactObserver, AppHandler{
 	@Override
 	public boolean isContactExists(Contact anyContact) {
 		
-		return ContactManager.IsContactExist(anyContact);
+		return PhoneBookManager.isContactExist(anyContact);
 	}
 	
 	@Override
@@ -38,6 +38,7 @@ public class DiaryManager implements ContactObserver, AppHandler{
 		// TODO Auto-generated method stub
 		
 	}
+	
 	@Override
 	public void printOptions() {
 		// TODO Auto-generated method stub
