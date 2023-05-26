@@ -2,16 +2,23 @@ package phoneApplications;
 
 public class SMSManager implements AppHandler, ContactObserver {
 
+	private SMSList sms;
+	
+	public SMSManager () {
+		
+		this.sms = new SMSList();
+	}
+	
 	@Override
 	public void onContactRemoved(Contact anyContact) {
-		// TODO Auto-generated method stub
 		
+		this.sms.deleteAllContentsWithContact(anyContact);
 	}
 
 	@Override
 	public boolean isContactExists(Contact anyContact) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return PhoneBookManager.isContactExist(anyContact);
 	}
 
 	@Override
