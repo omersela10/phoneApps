@@ -1,5 +1,7 @@
 package phoneApplications;
-
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 import java.io.*;
 
@@ -13,17 +15,19 @@ import java.io.*;
 
 public class Menu {
 
+	private static ContactList ourList;
+	private static DiaryManager ourDiary;
 	public static void main(String[] args) {
 		
 		// Hello message
 		System.out.println("Welcome to our Phone Book application!");
 		
 		// Create ContactList instance
-		ContactList ourList = new ContactList();
-		Diary ourDiary = new Diary();
+	    ourList = new ContactList();
+		
 		
 		// Start application
-		startApp(ourList, ourDiary);
+		startApp();
 		
 		return;
 	}
@@ -31,27 +35,10 @@ public class Menu {
 	
 		
 	// Print the menu and choose options.
-	public static void startApp (ContactList ourList, Diary ourDiary) {
-		Contact Shir = new Contact("Shir", "123");
-		ourList.addContact(Shir);
-		Contact Almog = new Contact("Almog", "456");
-		ourList.addContact(Almog);
-		Date newDate = new Date(2023,11,9);
-		MeetingEvent newMeetingEvent = new MeetingEvent(newDate, 30, Shir);
-		ourDiary.addEvent(newMeetingEvent, ourList);
-		//ourDiary.printDiary();
+	public static void startApp () {
 		
-		newDate = new Date(2021,2,10);
-		GeneralEvent newGeneralEvent = new GeneralEvent(newDate, 15, "Wedding");
-		ourDiary.addEvent(newGeneralEvent, ourList);
-		ourDiary.printDiary();
-		
-		ourDiary.removeEvent(newMeetingEvent);
-		ourDiary.printDiary();
-		//System.out.println(newMeetingEvent.toString());
 	
-		
-		/*Scanner scanner = new Scanner(System.in);
+		Scanner scanner = new Scanner(System.in);
 		
 		boolean exit = false;
 		
@@ -140,7 +127,7 @@ public class Menu {
 				System.out.println("Invalid option. Try again.");
 			}
 
-		}*/
+		}
 	       
 	}
 	

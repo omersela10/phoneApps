@@ -1,66 +1,57 @@
 package phoneApplications;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class MeetingEvent extends Event{
+	
 	// Data members
-	//private Event event;
 	private Contact contact;
 	
 	// Constructors
-	public MeetingEvent(Date anyDate, int anyDuration, Contact anyContact)
-	{
-		super(anyDate, anyDuration);
-		//Event newEvent = new Event(anyDate, anyDuration);
-		//this.event = newEvent;
-		Contact newContact = new Contact(anyContact);
-		this.contact = newContact;
+	public MeetingEvent(LocalDateTime anyDateTime, Duration anyDuration, Contact anyContact) {
+		
+		super(anyDateTime, anyDuration);
+		// MeetingEvent keeps reference to the Contact
+		Contact newContact = anyContact;
 	}
 	
-	public MeetingEvent(Event anyEvent, Contact anyContact)
-	{
+	public MeetingEvent(Event anyEvent, Contact anyContact) {
+		
 		super(anyEvent);
-		//Event newEvent = new Event(anyEvent);
-		//this.event = newEvent;
-		Contact newContact = new Contact(anyContact);
-		this.contact = newContact;
+		// MeetingEvent keeps reference to the Contact
+		Contact newContact = anyContact;
 	}
 	
 	public MeetingEvent(MeetingEvent anyMeetingEvent)
 	{
-		super(anyMeetingEvent.getDate(), anyMeetingEvent.getDuration());
-		//Event newEvent = new Event(anyMeetingEvent.getEvent());
-		//this.event = newEvent;
-		Contact newContact = new Contact(anyMeetingEvent.getContact());
-		this.contact = newContact;
+		super(anyMeetingEvent.getDateTime(), anyMeetingEvent.getMeetingDuration());
+		// MeetingEvent keeps reference to the Contact
+		this.contact = anyMeetingEvent.getContact();
 	}
 	
-	// Getters
-	/*public Event getEvent() 
-	{
-		return this.event;
-	}*/
-	
-	public Contact getContact() 
-	{
+	// Getter
+	public Contact getContact() {
 		return this.contact;
 	}
-	
-	//Setters
-	/*public void setEvent(Event otherEvent)
-	{
-		Event newEvent = new Event(otherEvent);
-		this.event = newEvent;
-	}*/
-	
-	public void setContact(Contact otherContact)
-	{
-		Contact newContact = new Contact(otherContact);
-		this.contact = newContact;
-	}
-	
+
+	@Override
 	public String toString () 
 	{	
-		return "Event Details:\n" + super.toString() +"Contact: " +this.getContact().toString() + "\n";
+		return "Event Details:\n" + super.toString() + "Meeting with" + "Contact: " + this.getContact() + "\n";
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		
+		// Check if obj is instance of GeneralEvent
+		if(obj instanceof MeetingEvent) {
+			// Casting
+			MeetingEvent anyMeetingEvent = (MeetingEvent)obj;
+			return super.equals(anyMeetingEvent) && this.getContact().equals(anyMeetingEvent.getContact());
+		}
+		
+		return false;
 	}
 
 }

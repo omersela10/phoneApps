@@ -1,63 +1,57 @@
 package phoneApplications;
+import java.time.*;
 import java.util.*;
 
 public abstract class Event 
 {
 	// Data members
-	protected Date date;
-	protected int duration;
+	// Immutable classes
+	protected LocalDateTime dateTime;
+	protected Duration meetingDuration;
 	
 	// Constructors
-	public Event(Date anyDate, int anyDuration)
-	{
-		Date newDate = new Date(anyDate);
-		this.date = newDate;
-		this.duration = anyDuration;
+	public Event(LocalDateTime anyDateTime, Duration anyDuration) {
+		this.dateTime = anyDateTime;
+		this.meetingDuration = anyDuration;
 	}
 	
-	public Event(Event anyEvent)
-	{
-		Date newDate = new Date(anyEvent.getDate());
-		this.date = newDate;
-		this.duration = anyEvent.getDuration();
+	public Event(Event anyEvent) {
+		this(anyEvent.dateTime, anyEvent.meetingDuration);
 	}
 	
-	// Getters
-	public Date getDate() 
-	{
-		return this.date;
+	// Getters:
+	public LocalDateTime getDateTime() {
+		return dateTime;
 	}
 	
-	public int getDuration() 
-	{
-		return this.duration;
+	public Duration getMeetingDuration() {
+		return meetingDuration;
 	}
 	
-	//Setters
-	public void setDate(Date otherDate)
-	{
-		Date newDate = new Date(otherDate);
-		this.date = newDate;
-	}
-	
-	public void setDuration(int otherDuration)
-	{
-		this.duration = otherDuration;
-	}
-	
-	public String toString () 
-	{	
-		return "Date:" + this.getDate().toString() + "Duration: " + this.getDuration() + "\n";
-	}
-	
-	public boolean ifEqualEvent(Event otherEvent)
-	{
-		if(!this.getDate().ifEqualDate(otherEvent.getDate()))
-			return false;
-		if (this.getDuration() != otherEvent.getDuration())
-			return false;
-		return true;
+	// Setters:
+	public void setDateTime(LocalDateTime dateTime) {
+		this.dateTime = dateTime;
 	}
 
+	public void setMeetingDuration(Duration meetingDuration) {
+		this.meetingDuration = meetingDuration;
+	}
+
+	@Override
+	public String toString () {
+		return "Date:" + this.getDateTime() + "Duration: " + this.getMeetingDuration() + "\n";
+	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		// Check if obj is Event
+		if(obj instanceof Event == true) {
+			// Casting
+			Event o = (Event)obj;
+			// Compare dateTime
+			return this.dateTime.equals(o.getDateTime());
+		}
+		return false;
+	}
+
 }

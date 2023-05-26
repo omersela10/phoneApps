@@ -1,62 +1,56 @@
 package phoneApplications;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class GeneralEvent extends Event{
+	
 	// Data members
-		//private Event event;
-		private String eventDescription;
+	private String eventDescription;
 		
 	// Constructors
-	public GeneralEvent(Date anyDate, int anyDuration, String anyEventDescription)
-	{
-		super(anyDate, anyDuration);
-		//Event newEvent = new Event(anyDate, anyDuration);
-		//this.event = newEvent;
+	public GeneralEvent(LocalDateTime anyDateTime, Duration anyDuration, String anyEventDescription) {
+		super(anyDateTime, anyDuration);
 		this.eventDescription = anyEventDescription;
 	}
 	
-	public GeneralEvent(Event anyEvent, String anyEventDescription)
-	{
+	public GeneralEvent(Event anyEvent, String anyEventDescription) {
 		super(anyEvent);
-		//Event newEvent = new Event(anyEvent);
-		//this.event = newEvent;
 		this.eventDescription = anyEventDescription;
 	}
-	
-	public GeneralEvent(GeneralEvent anyGeneralEvent)
-	{
-		super(anyGeneralEvent.getDate(), anyGeneralEvent.getDuration());
-		//Event newEvent = new Event(anyGeneralEvent.getEvent());
-		//this.event = newEvent;
+
+	public GeneralEvent(GeneralEvent anyGeneralEvent) {
+		super(anyGeneralEvent.getDateTime(), anyGeneralEvent.getMeetingDuration());
 		this.eventDescription = anyGeneralEvent.getEventDescription();
 	}
 	
 	// Getters
-	/*public Event getEvent() 
-	{
-		return this.event;
-	}*/
-	
-	public String getEventDescription() 
-	{
+	public String getEventDescription() {
 		return this.eventDescription;
 	}
 	
-	//Setters
-	/*public void setEvent(Event GeneralEvent)
-	{
-		Event newEvent = new Event(GeneralEvent);
-		this.event = newEvent;
-	}*/
-	
-	public void setEventDescription(String GeneralEventDescription)
-	{
+	// Setters
+
+	public void setEventDescription(String GeneralEventDescription) {
 		this.eventDescription = GeneralEventDescription;
 	}
+	
+	@Override
+	public String toString () {
+		return "Event Details:\n" + super.toString() + "The event description: " + this.getEventDescription() + "\n";
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
 		
-	public String toString () 
-	{	
-		return "Event Details:\n" + super.toString() + "The event description: " +this.getEventDescription() + "\n";
+		// Check if obj is instance of GeneralEvent
+		if(obj instanceof GeneralEvent) {
+			// Casting
+			GeneralEvent anyGeneralEvent = (GeneralEvent)obj;
+			return super.equals(anyGeneralEvent) && this.getEventDescription().equals(anyGeneralEvent.getEventDescription());
+		}
+		
+		return false;
 	}
 
 }
