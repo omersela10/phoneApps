@@ -11,6 +11,10 @@ public class PhoneBookManager implements AppHandler{
 		return phoneBook.searchByName(anyContact.getName());
 	}
 	
+	public static boolean isContactExist(String anyContactName) {
+		return phoneBook.searchByName(anyContactName);
+	}
+	
 	public PhoneBookManager() {
 		phoneBook = new ContactList();
 		this.observers = new ArrayList<ContactObserver>();
