@@ -1,42 +1,24 @@
 package phoneApplications;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+
 import java.util.*;
-import java.io.*;
 
-// Group Serial Number: 1
-
-// Ahigad Genish  316228022
-// Omer Sela      316539535	
-// Shir Cohen     314624040
-// Almog Sharoni  208611764 
-// Yakov Avitan   205517089
-
-public class Menu {
+public class ContactManager implements AppHandler{
 
 	private static ContactList ourList;
-	
-	public static void main(String[] args) {
-		
-		// Hello message
-		System.out.println("Welcome to our Phone Book application!");
-		
-		// Create ContactList instance
-	    ourList = new ContactList();
-	 
-		// Start application
-		startApp();
-		
-		return;
+	private ArrayList<ContactObserver> observers;
+
+	public static boolean IsContactExist(Contact anyContact) {
+		return ourList.searchByName(anyContact.getName());
 	}
 	
+	public ContactManager() {
+		ourList = new ContactList();
+		this.observers = new ArrayList<ContactObserver>();
+	}
 	
+	@Override
+	public void startApp() {
 		
-	// Print the menu and choose options.
-	public static void startApp () {
-		
-	
 		Scanner scanner = new Scanner(System.in);
 		
 		boolean exit = false;
@@ -66,7 +48,8 @@ public class Menu {
 				// Remove contact
 				System.out.println("Enter name:");
 				name = scanner.nextLine();
-				ourList.removeContact(name);
+				Contact removedContact = ourList.removeContact(name);
+				this.notifyObservers(removedContact);
 				break;
 
 			    case "3":
@@ -127,12 +110,10 @@ public class Menu {
 			}
 
 		}
-	       
 	}
-	
-	// Print Options
-	public static void printOptions() {
-		
+
+	@Override
+	public void printOptions() {
 		 // Print options
 		System.out.println("Enter an option:");
 		System.out.println("1. Add a contact");
@@ -146,7 +127,27 @@ public class Menu {
 		System.out.println("9. Save to file");
 		System.out.println("10. Load from file");
 		System.out.println("11. Exit");
-
+		
 	}
+	
+	// Register Observer - Observer Design Pattern
+	public void registerObserver(ContactObserver observer) {
+		
+        observers.add(observer);
+    }
 
+	// Unregister Observer - Observer Design Pattern
+    public void unregisterObserver(ContactObserver observer) {
+    	
+        observers.remove(observer);
+    }
+    
+    // Notify Observers - Observer Design Pattern
+    private void notifyObservers(Contact contact) {
+    	
+        for (ContactObserver observer : observers) {
+            observer.onContactRemoved(contact);
+        }
+    }
+	
 }

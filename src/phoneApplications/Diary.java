@@ -158,7 +158,7 @@ public class Diary
 	}
 	
 	// Help method retrieve all events with some contact.
-	private ArrayList<Event> allEventsWithGivenContact(Contact anyContact) {
+	public ArrayList<Event> allEventsWithGivenContact(Contact anyContact) {
 		
 		boolean anyEvent = false;
 		// Initialize the Iterator

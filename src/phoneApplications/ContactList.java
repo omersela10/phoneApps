@@ -50,10 +50,10 @@ public class ContactList {
 	
 	
 	// Remove contact
-	public void removeContact (String name) {
+	public Contact removeContact (String name) {
 		
 		boolean anyName = false;
-	
+		Contact returnContact = null;
 		// Check if the contact exist an remove it.
 		for(Contact contact : this.contactList) {
 			
@@ -61,7 +61,7 @@ public class ContactList {
 				// Found and remove
 				anyName = true;
 				this.contactList.remove(contact);
-				
+				returnContact = contact;
 				break;
 			}
 
@@ -76,6 +76,7 @@ public class ContactList {
 			System.out.println(name + " removed from contact list.");
 		}
 		
+		return returnContact;
 	}
 	
 	// Print list
