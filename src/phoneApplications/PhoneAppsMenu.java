@@ -29,9 +29,10 @@ public class PhoneAppsMenu extends JFrame {
         diaryManager = new DiaryManager();
         smsManager = new SMSManager();
         //mediaManager = new MediaManager();
-        //phoneBookManager
-        
+    
+        // Add Observers - Observer Design Pattern
         phoneBookManager.registerObserver(diaryManager);
+        phoneBookManager.registerObserver(smsManager);
         
         setTitle("Phone Applications");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
