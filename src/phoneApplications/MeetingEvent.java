@@ -13,14 +13,14 @@ public class MeetingEvent extends Event{
 		
 		super(anyDateTime, anyDuration);
 		// MeetingEvent keeps reference to the Contact
-		Contact newContact = anyContact;
+		this.contact = anyContact;
 	}
 	
 	public MeetingEvent(Event anyEvent, Contact anyContact) {
 		
 		super(anyEvent);
 		// MeetingEvent keeps reference to the Contact
-		Contact newContact = anyContact;
+		this.contact = anyContact;
 	}
 	
 	public MeetingEvent(MeetingEvent anyMeetingEvent)

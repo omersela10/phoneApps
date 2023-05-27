@@ -6,8 +6,12 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import javax.swing.*;
 import java.awt.*;
@@ -74,10 +78,10 @@ public class DiaryWindow extends JFrame{
     	setLocationRelativeTo(null);
     	setVisible(true);
     	
-	}
+}
 
-	// Get Instance function - Singleton Design Pattern
-    public static synchronized void getInstance(DiaryManager newDiaryManager) {
+// Get Instance function - Singleton Design Pattern
+public static synchronized void getInstance(DiaryManager newDiaryManager) {
     	
     	 if (instance == null) {
     		instance = new DiaryWindow(newDiaryManager);
@@ -144,38 +148,134 @@ public class DiaryWindow extends JFrame{
         switch (buttonText) {
         
             case "Add Event":
-            	addEvent();
+            	// True meaning add
+            	addOrRemoveEvent(true);
                 break;
-            case "Delete Event":
-                // Implement the logic for deleting an event
-             
-                break;
-            case "Print Events by Date":
-                // Implement the logic for printing events by date
-              
-                break;
-            case "Print Meetings by Contact":
-                // Implement the logic for printing meetings by contact
                 
+            case "Delete Event":
+            	// False meaning remove
+            	addOrRemoveEvent(false);
                 break;
+                
+            case "Print Events by Date":
+            	printEventsByDate();
+                break;
+                
+            case "Print Meetings by Contact":
+                printMeetingByContact();
+                break;
+                
             case "Check Event Collisions":
-                // Implement the logic for checking event collisions
-           
+            	checkEventCollisions();
                 break;
+                
             case "Print All Events":
-                // Implement the logic for printing all events
-               
+            	printAllEvents();
                 break;
+                
             default:
                 break;
         }
+}
+private void checkEventCollisions() {
+		
+	diaryManager.getDiary().detectCollisionAndRemoveLast();
+	JOptionPane.showMessageDialog(this, "Collision removed");
+}
+
+private void printAllEvents() {
+	// Clear Text area 
+	this.diaryTextArea.setText("");
+	this.diaryManager.getDiary().printAllEvents(diaryTextArea);
+}
+// Print Meeting by name
+private void printMeetingByContact() {
+	
+	// Open dialog to get contact details
+    String name = JOptionPane.showInputDialog(this, "Enter name:");
+
+    if(name == null) {
+    	return;
     }
     
-private void addEvent() {
+    // Get the Contact
+    Contact theContact = PhoneBookManager.ContactByName(name);
+    if(theContact == null) {
+    	JOptionPane.showMessageDialog(this,name + " not exist in Phone book");
+    	return;
+    }
+    
+    // Clear Text area 
+	this.diaryTextArea.setText("");
+    this.diaryManager.getDiary().printAllEventsWithGivenContact(theContact, diaryTextArea);
+		
+}
+
+// Print events by date
+private void printEventsByDate() {
+	
+	
+	// Create a JDialog to display the date picker
+    JDialog dialog = new JDialog();
+    dialog.setTitle("Choose Date");
+    dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+    dialog.setSize(200, 100);
+    dialog.setLocationRelativeTo(this);
+
+    // Create a JDatePicker component
+    SpinnerDateModel dateModel = new SpinnerDateModel();
+	JSpinner dateSpinner = new JSpinner(dateModel);
+	// Show only Date
+	JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateSpinner, "dd/MM/yyyy");
+	dateSpinner.setEditor(dateEditor);
+
+    // Create a button to confirm the selected date
+    JButton confirmButton = new JButton("Select");
+    confirmButton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            // Retrieve the selected date
+            Date selectedDate = (Date) dateModel.getValue();
+
+            // Process the selected date
+            if (selectedDate != null) {
+                // Convert the selected date to LocalDateTime
+            	LocalDate localDate = selectedDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            	    
+                diaryTextArea.setText("");
+                diaryManager.getDiary().printCertainDatesEvents(localDate, diaryTextArea);
+
+                // Close the dialog
+                dialog.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Please select a valid date.");
+            }
+        }
+    });
+
+    // Create a panel to hold the components
+    JPanel panel = new JPanel(new BorderLayout());
+    panel.add(dateSpinner, BorderLayout.CENTER);
+    panel.add(confirmButton, BorderLayout.SOUTH);
+
+    // Set the panel as the content pane of the dialog
+    dialog.setContentPane(panel);
+
+    // Display the dialog to the user
+    dialog.setVisible(true);
+		
+}
+
+// Add or remove events
+private void addOrRemoveEvent(boolean addOrRemove) {
     	
     	// Create a custom dialog to get the event details
     	JDialog dialog = new JDialog();
-    	dialog.setTitle("Add Event");
+    	if(addOrRemove == true) {
+    		dialog.setTitle("Add Event");
+    	}
+    	else {
+    		dialog.setTitle("Remove Event");
+    	}
     	dialog.setModal(true);
 
     	// Create input fields for date and time
@@ -185,16 +285,11 @@ private void addEvent() {
     	dialog.add(dateLabel);
     	dialog.add(dateSpinner);
 
-    	SpinnerNumberModel hoursModel = new SpinnerNumberModel(0, 0, 23, 1);
-    	JSpinner hoursSpinner = new JSpinner(hoursModel);
-    	SpinnerNumberModel minutesModel = new SpinnerNumberModel(0, 0, 59, 1);
-    	JSpinner minutesSpinner = new JSpinner(minutesModel);
- 
     	// Create input fields for duration
     	JTextField durationField = new JTextField();
     	dialog.add(new JLabel("Duration (minutes):"));
     	dialog.add(durationField);
-
+    	
     	// Create radio buttons for contact picker
     	JRadioButton contactRadioButton = new JRadioButton("Contact");
     	JRadioButton descriptionRadioButton = new JRadioButton("Description");
@@ -206,12 +301,14 @@ private void addEvent() {
 
     	// Set the default selection to the description radio button
     	descriptionRadioButton.setSelected(true);
-    	
+    
     	// Create input fields for contact name and description
     	JTextField contactField = new JTextField();
     	JTextField descriptionField = new JTextField();
     	dialog.add(new JLabel("Contact Name:"));
     	dialog.add(contactField);
+    	// Disable Contact at first
+    	contactField.setEnabled(false);
     	dialog.add(new JLabel("Description:"));
     	dialog.add(descriptionField);
 
@@ -230,21 +327,26 @@ private void addEvent() {
     	});
 
     	// Create a button to confirm the event creation
-    	JButton confirmButton = new JButton("Add Event");
+    	JButton confirmButton = null;
+    	if(addOrRemove == true) {
+    		confirmButton = new JButton("Add Event");
+    	}
+    	else {
+    		confirmButton = new JButton("Remove Button");
+    	}
+    	
     	confirmButton.addActionListener(new ActionListener() {
     		
     	    public void actionPerformed(ActionEvent e) {
     	    	
-    	    	try {
-    	        // Retrieve the selected date and time
-    	        Date selectedDate = (Date) dateSpinner.getValue();
-    	        int selectedHour = (int) hoursSpinner.getValue();
-    	        int selectedMinute = (int) minutesSpinner.getValue();
+    	    try {
+    	    	// Retrieve the selected date and time
+    	    	Date dateTime = (Date)dateSpinner.getValue();
 
-    	        // Combine the date and time into a LocalDateTime object
-    	        LocalDateTime dateTime = LocalDateTime.ofInstant(selectedDate.toInstant(), ZoneId.systemDefault())
-    	                .withHour(selectedHour).withMinute(selectedMinute);
-
+    	    	// Convert Date to LocalDateTime
+    	    	Instant instant = dateTime.toInstant();
+    	    	ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+    	    	LocalDateTime localDateTime = zonedDateTime.toLocalDateTime();
     	        // Retrieve the duration
     	        int duration = Integer.parseInt(durationField.getText());
     	        Duration meetingDuration = Duration.ofMinutes(duration);
@@ -252,19 +354,40 @@ private void addEvent() {
     	        // Retrieve the contact name or description based on the selected radio button
     	        String contactName = "";
     	        String description = "";
+    	        
     	        if (contactRadioButton.isSelected() == true) {
     	            contactName = contactField.getText();
     	            Contact theContact = PhoneBookManager.ContactByName(contactName);
+    	            
     	            if(theContact == null) {
-    	            	JOptionPane.showMessageDialog(null,contactName + "not exist in Phone Book");
+    	            	// The Contact not exist,
+    	            	JOptionPane.showMessageDialog(null,contactName + " not exist in Phone Book");
+    	            	return;
   
     	            }
-    	            // The Contact exist, add it.
-    	            diaryManager.getDiary().addEvent(new MeetingEvent(dateTime, meetingDuration, theContact));
+    	            // Check if add or remove
+    	            if(addOrRemove == true) {
+    	            	// Add it.
+    	            	diaryManager.getDiary().addEvent(new MeetingEvent(localDateTime, meetingDuration, theContact));
+    	            }
+    	            else {
+    	            	// Remove it
+    	            	diaryManager.getDiary().removeEvent(new MeetingEvent(localDateTime, meetingDuration, theContact));
+    	            }
     	            
     	        } else if (descriptionRadioButton.isSelected() == true) {
     	            description = descriptionField.getText();
-    	            diaryManager.getDiary().addEvent(new GeneralEvent(dateTime, meetingDuration, description));
+    	            
+    	            // Check if add or remove
+    	            if(addOrRemove == true) {
+    	            	// Add it.
+    	            	diaryManager.getDiary().addEvent(new GeneralEvent(localDateTime, meetingDuration, description));
+    	            }
+    	            else {
+    	            	// Remove it
+    	            	diaryManager.getDiary().removeEvent(new GeneralEvent(localDateTime, meetingDuration, description));
+    	            }
+    	           
     	            
     	        }
 

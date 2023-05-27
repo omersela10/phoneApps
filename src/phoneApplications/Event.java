@@ -39,7 +39,7 @@ public abstract class Event
 
 	@Override
 	public String toString () {
-		return "Date: " + this.getDateTime() + "Duration: " + this.getMeetingDuration() + "\n";
+		return "Date: " + this.getDateTime() + " Duration: " + this.getMeetingDuration() + "\n";
 	}
 	
 	@Override

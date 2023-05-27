@@ -2,6 +2,10 @@ package phoneApplications;
 
 import java.util.*;
 import java.util.Map.Entry;
+
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+
 import java.time.*;
 
 public class Diary
@@ -33,7 +37,8 @@ public class Diary
 			newEventList.add(newEvent);
 			this.diary.put(newEventDate, newEventList);
 		}
-		
+		// Notify insertion.
+		JOptionPane.showMessageDialog(null,newEvent + "added");
 	}
 	
 	// Remove event from diary
@@ -52,41 +57,42 @@ public class Diary
 					
 					// Found, so remove and notify
 					this.diary.get(dateOfEvent).remove(anyEvent);
-					System.out.println("The event has been deleted.");
+					JOptionPane.showMessageDialog(null, "The event has been deleted.");
 					return;
 				}
 			}
 		}
 		// Not found. so notify.
-		System.out.println("The event doesn't exist in the diary and is therefore not deleted.");
+		JOptionPane.showMessageDialog(null,"The event doesn't exist in the diary and is therefore not deleted.");
 	}
 	
 	// Help method to print the events in given date.
-	private void printEventInDate(LocalDate anyDate) {
+	private void printEventInDate(LocalDate anyDate, JTextArea diaryTextArea) {
 		
 		// Check that there is anyEvent in this Date
 		if(this.diary.containsKey(anyDate) == false) {
-			System.out.println("There is no events in this date");
+			diaryTextArea.append("There is no events in this date");
 			return;
 		}
 		// Print all events on this date	
 		for(Event event : this.diary.get(anyDate)) {
 			
-			System.out.println(event);
+			diaryTextArea.append(event.toString());
 		}
 		
 	}
 	
 	// Help method to print diary
-	private void printDiary() {
+	private void printDiary(JTextArea diaryTextArea) {
 		
+		diaryTextArea.append("The Diary events: \n");
 		// Initialize the Iterator
 		Iterator<Entry<LocalDate, ArrayList<Event>>> iterator = this.diary.entrySet().iterator();
 		
 		while(iterator.hasNext() == true) {
 			
 			// Print all events on this date
-			printEventInDate(iterator.next().getKey());
+			printEventInDate(iterator.next().getKey(), diaryTextArea);
 		}
 
 	}
@@ -119,23 +125,23 @@ public class Diary
 	}
 	
 	// Print specific date sorted
-	public void printCertainDatesEvents(LocalDate anyDate) {
+	public void printCertainDatesEvents(LocalDate anyDate, JTextArea diaryTextArea) {
 		
 		// Sort the events in the given date
 		this.sortEventInDate(anyDate);
 		
 		// Print all events on this date
-		this.printEventInDate(anyDate);
+		this.printEventInDate(anyDate, diaryTextArea);
 	}
 	
 	// Print the diary sorted.
-	public void printAllEvents() {
+	public void printAllEvents(JTextArea diaryTextArea) {
 		
 		// Sort the events in the given date
 		this.sortDiary();
 		
 		// Print all events on this date
-		this.printDiary();
+		this.printDiary(diaryTextArea);
 	}
 	
 	// Help method that return the all events that some contact have in specific date.
@@ -189,14 +195,14 @@ public class Diary
 	}
 	
 	// Print all events with some contact.
-	public void printAllEventsWithGivenContact(Contact anyContact) {
+	public void printAllEventsWithGivenContact(Contact anyContact, JTextArea diaryTextArea) {
 		
 		// Get the all events of given contact
 		ArrayList<Event> allEventsOfSomeContact = allEventsWithGivenContact(anyContact);
 		
 		// Print this events.
 		for(Event event : allEventsOfSomeContact) {
-			System.out.println(event);
+			diaryTextArea.append(event.toString());
 		}
 	}
 	
