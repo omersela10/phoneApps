@@ -95,7 +95,7 @@ public class ContactList {
 	//שיניתי לפונקציה שמחזירה ערך
 	public boolean searchByName (String name) {
 			
-			// Check if the contact exist an remove it.
+			// Check if the contact exist.
 			for(Contact contact : this.contactList) {
 				
 				if(contact.getName().equals(name) == true) {
@@ -107,6 +107,22 @@ public class ContactList {
 			System.out.println( name + " does not in the contact list.");
 			return false;
 			}
+	
+	// Search for name in the Phone Book and return the contact
+	public Contact searchContactByName (String name) {
+		
+		// Check if the contact exist.
+		for(Contact contact : this.contactList) {
+			
+			if(contact.getName().equals(name) == true) {
+				
+				return contact;
+			}
+
+		}
+
+		return null;
+	}
 		
 	/*public void searchByName (String name) {
 		
