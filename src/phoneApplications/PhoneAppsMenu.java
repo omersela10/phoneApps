@@ -16,7 +16,7 @@ import java.io.*;
 public class PhoneAppsMenu{
 
 	private static PhoneBookManager ourPhoneBookManager;
-	//private static SMSManager ourSMSManager;
+	private static SMSManager ourSMSManager;
 	private static DiaryManager ourDiaryManager;
 	//private static MediaManager ourMediaManager;
 	
@@ -27,12 +27,12 @@ public class PhoneAppsMenu{
 		
 		// Create ContactList instance
 		ourPhoneBookManager = new PhoneBookManager();
-		//ourSMSListManager = new SMSManager();
+		ourSMSManager = new SMSManager();
 		ourDiaryManager = new DiaryManager();
 		//ourMediaManager = new MediaManager();
 		
 		ourPhoneBookManager.registerObserver(ourDiaryManager);
-		//ourPhoneBookManager.registerObserver(ourSMSManager);
+		ourPhoneBookManager.registerObserver(ourSMSManager);
 		
 		// Start application
 		startApp();
@@ -65,7 +65,7 @@ public class PhoneAppsMenu{
 			    	break;
 
 			    case "2":
-			    	//ourSMSManager.startApp();
+			    	ourSMSManager.startApp();
 			    	break;
 
 			    case "3":
