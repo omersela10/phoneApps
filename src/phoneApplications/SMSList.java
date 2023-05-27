@@ -50,7 +50,6 @@ public class SMSList {
 			JOptionPane.showMessageDialog(null, anyContact.getName() + " added.");
 		}
 		
-		JOptionPane.showMessageDialog(null," content added.");
 	}
 	
 	public void deleteAllContentsWithContact (Contact anyContact) {

@@ -106,7 +106,11 @@ public class SMSWindow extends JFrame{
                     // Open dialog to get contact message
                     String text = JOptionPane.showInputDialog(this, "Enter the message with this contact:");
                     
-                    if(PhoneBookManager.ContactByName(name)==null) {
+                    if (text == null || name==null) {
+                    	break;
+                    }
+                    
+                    if(PhoneBookManager.ContactByName(name) != null) {
                     	
                     	SmsManager.getSMSList().addContentToContact(PhoneBookManager.ContactByName(name), text);
                     }
@@ -120,8 +124,13 @@ public class SMSWindow extends JFrame{
                 	
                     // Open dialog to get contact name
                     String nameToDelete = JOptionPane.showInputDialog(this, "Enter contact name:");
+                    
+                    if (nameToDelete==null) {
+                    	break;
+                    }
+                    
                     // Perform logic to delete the contact messages
-                    if (PhoneBookManager.ContactByName(nameToDelete)==null) {
+                    if (PhoneBookManager.ContactByName(nameToDelete) != null) {
 						
                     	SmsManager.getSMSList().deleteAllContentsWithContact(PhoneBookManager.ContactByName(nameToDelete));
 					}
@@ -135,8 +144,12 @@ public class SMSWindow extends JFrame{
                 	
                 	//  Open dialog to get contact name
                 	String nameToPrint = JOptionPane.showInputDialog(this, "Enter contact name:");
+                	
+                    if (nameToPrint==null) {
+                    	break;
+                    }
                     
-                    if (PhoneBookManager.ContactByName(nameToPrint)==null) {
+                    if (PhoneBookManager.ContactByName(nameToPrint) != null) {
                     	
                     	// Clear the text area
                     	SMSTextArea.setText("");
@@ -152,6 +165,11 @@ public class SMSWindow extends JFrame{
                 case "Search for a sentence":
                     // Open dialog to get sentence to search
                     String sentence = JOptionPane.showInputDialog(this, "Enter sentence to search:");
+                    
+                    if (sentence==null) {
+                    	break;
+                    }
+                    
                     // Perform logic to search for the contact
                     // Clear the text area
                 	SMSTextArea.setText("");

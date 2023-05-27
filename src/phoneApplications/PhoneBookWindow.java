@@ -110,14 +110,20 @@ public class PhoneBookWindow extends JFrame {
                 // Open dialog to get contact details
                 String name = JOptionPane.showInputDialog(this, "Enter name:");
                 String phone = JOptionPane.showInputDialog(this, "Enter phone number:");
-          
+                
+                if (name == null || phone == null) {
+                	break;
+                }
                 phoneBookManager.getPhoneBook().addContact(new Contact(name, phone));
                 break;
                 
             case "Remove Contact":
                 // Open dialog to get contact name
                 String contactName = JOptionPane.showInputDialog(this, "Enter contact name:");
-
+                
+                if (contactName == null) {
+                	break;
+                }
                 Contact removed =  phoneBookManager.getPhoneBook().removeContact(contactName);
                 // Notify Observers upon changes.
                 phoneBookManager.notifyObservers(removed);
@@ -132,6 +138,10 @@ public class PhoneBookWindow extends JFrame {
             case "Search Contact":
                 // Open dialog to get contact name
                 String searchName = JOptionPane.showInputDialog(this, "Enter contact name:");
+                if (searchName == null) {
+                	break;
+                }
+                
                 phoneBookManager.getPhoneBook().searchByName(searchName);
                 break;
                 
@@ -153,12 +163,18 @@ public class PhoneBookWindow extends JFrame {
             case "Save Phone Book":
                 // Open dialog to get file name
                 String fileName = JOptionPane.showInputDialog(this, "Enter file name:");
+                if (fileName == null) {
+                	break;
+                }
                 phoneBookManager.getPhoneBook().exportPhoneBook(fileName);
                 break;
                 
             case "Load Phone Book":
                 // Open dialog to get file name
                 String loadFileName = JOptionPane.showInputDialog(this, "Enter file name:");
+                if (loadFileName == null) {
+                	break;
+                }
                 phoneBookManager.getPhoneBook().importAndAppendPhoneBook(loadFileName);
                 break;
                 
