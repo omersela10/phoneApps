@@ -53,7 +53,6 @@ public class SMSManager implements AppHandler, ContactObserver {
 			    	}
 			    	else {
 			    		
-			    		System.out.println("This contact doesnt exist in the phone book.");
 			    		System.out.println("If you want add content with this contact, please add this contact to your phone book.");
 			    	}
 			    	
@@ -63,9 +62,13 @@ public class SMSManager implements AppHandler, ContactObserver {
 					// Delete a sms with contact
 			    	System.out.println("Enter name from phone book to delete the SMS with him.");
 					String nameToDelete = scanner.nextLine();
-					
-					this.sms.deleteAllContentsWithContact(PhoneBookManager.ContactByName(nameToDelete));
-			    	
+					if (PhoneBookManager.isContactExist(nameToDelete) == true) {
+						
+						this.sms.deleteAllContentsWithContact(PhoneBookManager.ContactByName(nameToDelete));
+					}
+					else {
+						System.out.println("This contact doesnt exist in the phone book.");
+					}
 					break;
 
 			    case "3":
@@ -73,7 +76,10 @@ public class SMSManager implements AppHandler, ContactObserver {
 			    	System.out.println("Enter name from phone book to print the SMS with him.");
 					String nameToPrint = scanner.nextLine();
 					
-					this.sms.printAllContentsWithContact(PhoneBookManager.ContactByName(nameToPrint));
+					if (PhoneBookManager.isContactExist(nameToPrint) == true) {
+						
+						this.sms.printAllContentsWithContact(PhoneBookManager.ContactByName(nameToPrint));
+					}
 					
 			    	break;
 

@@ -17,11 +17,6 @@ public class SMSList {
 		return smsList;
 	}
 	
-	// Check if the contact is in the contact list 
-	private boolean isValidContact (Contact anyContact) {
-		
-		return true;
-	}
 	
 	private SMS containContact (Contact anyContact) {
 		
@@ -38,19 +33,15 @@ public class SMSList {
 	
 	public void addContentToContact (Contact anyContact , String contentText) {
 		
-		if (isValidContact(anyContact) == false ) {
-			System.out.println("This contact not in the contact list");
-			return;
-		}
-		
-		//else: isValidContact(anyContact) == true
 		SMS SMSContact = this.containContact (anyContact);
 		
+		// If there is a open SMS with the contact person
 		if (SMSContact != null) {
 			SMSContact.addContent(contentText);
 		}
+		// if this is the first content with anyContact
 		else {
-			// if this is the first content with anyContact
+			
 			this.getSMSList().add(new SMS(anyContact, contentText));
 		}
 		
@@ -59,6 +50,9 @@ public class SMSList {
 	
 	public void deleteAllContentsWithContact (Contact anyContact) {
 		
+		if (anyContact == null) {
+			return;
+		}
 		SMS SMSContact = this.containContact (anyContact);
 		
 		if (SMSContact != null ) {
