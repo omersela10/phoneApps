@@ -10,50 +10,52 @@ import javax.swing.*;
 
 public class PhoneBookWindow extends JFrame {
 
-	private static PhoneBookWindow instance;
+	// Data Members
+	private static PhoneBookWindow phoneBookWindowInstance;
     private PhoneBookManager phoneBookManager;
 	// Text area to display the phone book list
 	private JTextArea phoneBookTextArea; 
 	
     // Singleton Design Pattern
-    private PhoneBookWindow(PhoneBookManager manager) {
-        this.phoneBookManager = manager;
-        initialize();
+    private PhoneBookWindow(PhoneBookManager newPhoneBookmanager) {
+        this.phoneBookManager = newPhoneBookmanager;
     }
 
-    public static synchronized PhoneBookWindow getInstance(PhoneBookManager manager) {
+    // Get Instance function - Singleton Design Pattern
+    public static synchronized PhoneBookWindow getInstance(PhoneBookManager newPhoneBookmanager) {
     	
-        if (instance == null) {
-            instance = new PhoneBookWindow(manager);
+        if (phoneBookWindowInstance == null) {
+        	phoneBookWindowInstance = new PhoneBookWindow(newPhoneBookmanager);
         }
-        return instance;
+        initialize(); 
+        return phoneBookWindowInstance;
     }
 
-    private void initialize() {
+    private static void initialize() {
     	
-    	setTitle("Phone Book");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setPreferredSize(new Dimension(800, 400));
+    	phoneBookWindowInstance.setTitle("Phone Book");
+    	phoneBookWindowInstance.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    	phoneBookWindowInstance.setPreferredSize(new Dimension(800, 400));
 
         // Set up the window components and event handlers
         // ...
     	// Create the buttons
-    	JButton addContactButton = createButton("Add Contact");
-    	JButton removeContactButton = createButton("Remove Contact");
-    	JButton printPhoneBookButton = createButton("Print Phone Book");
-    	JButton searchContactButton = createButton("Search Contact");
-    	JButton sortByNameButton = createButton("Sort by Name");
-    	JButton sortByPhoneNumberButton = createButton("Sort by Phone Number");
-    	JButton removeDuplicatesButton = createButton("Remove Duplicates");
-    	JButton reverseListButton = createButton("Reverse List");
-    	JButton savePhoneBookButton = createButton("Save Phone Book");
-    	JButton loadPhoneBookButton = createButton("Load Phone Book");
+    	JButton addContactButton = phoneBookWindowInstance.createButton("Add Contact");
+    	JButton removeContactButton = phoneBookWindowInstance.createButton("Remove Contact");
+    	JButton printPhoneBookButton =phoneBookWindowInstance.createButton("Print Phone Book");
+    	JButton searchContactButton = phoneBookWindowInstance.createButton("Search Contact");
+    	JButton sortByNameButton = phoneBookWindowInstance.createButton("Sort by Name");
+    	JButton sortByPhoneNumberButton = phoneBookWindowInstance.createButton("Sort by Phone Number");
+    	JButton removeDuplicatesButton = phoneBookWindowInstance.createButton("Remove Duplicates");
+    	JButton reverseListButton = phoneBookWindowInstance.createButton("Reverse List");
+    	JButton savePhoneBookButton = phoneBookWindowInstance.createButton("Save Phone Book");
+    	JButton loadPhoneBookButton = phoneBookWindowInstance.createButton("Load Phone Book");
     			
 
     	// Create the text area
-    	phoneBookTextArea = new JTextArea();
-    	phoneBookTextArea.setEditable(false); // Make it read-only
-    	JScrollPane scrollPane = new JScrollPane(phoneBookTextArea);
+    	phoneBookWindowInstance.phoneBookTextArea = new JTextArea();
+    	phoneBookWindowInstance.phoneBookTextArea.setEditable(false); // Make it read-only
+    	JScrollPane scrollPane = new JScrollPane(phoneBookWindowInstance.phoneBookTextArea);
 
     	// Create the main panel with BorderLayout
     	JPanel mainPanel = new JPanel(new BorderLayout());
@@ -79,12 +81,12 @@ public class PhoneBookWindow extends JFrame {
     	mainPanel.add(scrollPane, BorderLayout.CENTER);
 
     	// Add the main panel to the frame
-    	add(mainPanel);
+    	phoneBookWindowInstance.add(mainPanel);
 
     	// Pack and display the frame
-    	pack();
-    	setLocationRelativeTo(null);
-    	setVisible(true);	
+    	phoneBookWindowInstance.pack();
+    	phoneBookWindowInstance.setLocationRelativeTo(null);
+    	phoneBookWindowInstance.setVisible(true);	
     }
     
     // Create Buttons
@@ -108,14 +110,14 @@ public class PhoneBookWindow extends JFrame {
                 // Open dialog to get contact details
                 String name = JOptionPane.showInputDialog(this, "Enter name:");
                 String phone = JOptionPane.showInputDialog(this, "Enter phone number:");
-                // Perform logic to add the contact
+          
                 phoneBookManager.getPhoneBook().addContact(new Contact(name, phone));
                 break;
                 
             case "Remove Contact":
                 // Open dialog to get contact name
                 String contactName = JOptionPane.showInputDialog(this, "Enter contact name:");
-                // Perform logic to remove the contact
+
                 Contact removed =  phoneBookManager.getPhoneBook().removeContact(contactName);
                 // Notify Observers upon changes.
                 phoneBookManager.notifyObservers(removed);
@@ -130,45 +132,38 @@ public class PhoneBookWindow extends JFrame {
             case "Search Contact":
                 // Open dialog to get contact name
                 String searchName = JOptionPane.showInputDialog(this, "Enter contact name:");
-                // Perform logic to search for the contact
                 phoneBookManager.getPhoneBook().searchByName(searchName);
                 break;
                 
             case "Sort by Name":
-                // Perform logic to sort the phone book by name
             	phoneBookManager.getPhoneBook().sortListByName();
                 break;
             case "Sort by Phone Number":
-                // Perform logic to sort the phone book by phone number
             	phoneBookManager.getPhoneBook().sortListByPhoneNumber();
                 break;
                 
             case "Remove Duplicates":
-                // Perform logic to remove duplicates from the phone book
             	phoneBookManager.getPhoneBook().removeDuplicate();
                 break;
+                
             case "Reverse List":
-                // Perform logic to reverse the phone book list
             	phoneBookManager.getPhoneBook().reverse();
                 break;
                 
             case "Save Phone Book":
                 // Open dialog to get file name
                 String fileName = JOptionPane.showInputDialog(this, "Enter file name:");
-                // Perform logic to save the phone book to a file
                 phoneBookManager.getPhoneBook().exportPhoneBook(fileName);
                 break;
                 
             case "Load Phone Book":
                 // Open dialog to get file name
                 String loadFileName = JOptionPane.showInputDialog(this, "Enter file name:");
-                // Perform logic to load and append phone book from a file
                 phoneBookManager.getPhoneBook().importAndAppendPhoneBook(loadFileName);
                 break;
                 
            
         }
     }
-    // Other methods and event handlers
-    // ...
+
 }

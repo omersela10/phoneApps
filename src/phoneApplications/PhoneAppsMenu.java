@@ -31,6 +31,8 @@ public class PhoneAppsMenu extends JFrame {
         //mediaManager = new MediaManager();
         //phoneBookManager
         
+        phoneBookManager.registerObserver(diaryManager);
+        
         setTitle("Phone Applications");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(1000, 600));
@@ -98,7 +100,7 @@ public class PhoneAppsMenu extends JFrame {
         case "Diary":
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
-                    //new DiaryWindow(diaryManager);
+                    DiaryWindow.getInstance(diaryManager);
                 }
             });
             break;

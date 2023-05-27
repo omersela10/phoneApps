@@ -31,13 +31,13 @@ public class ContactList {
 	public void addContact(Contact anyContact) {
 		
 		// Check if any contact with this name already exist in the list.
-		//Contact exist = this.searchByName(anyContact.getName());
+		Contact exist = this.searchContactByName(anyContact.getName());
 		
-		//if(exist == null) {
+		if(exist != null) {
 			// Notify to user and return
-			//JOptionPane.showMessageDialog(null,anyContact.getName() + " already exist in the list");
-			//return;
-		//}
+			JOptionPane.showMessageDialog(null,anyContact.getName() + " already exist in the list");
+			return;
+		}
 		
 		// Build Contact
 		Contact newContact = new Contact(anyContact);

@@ -27,12 +27,9 @@ public class PhoneBookManager extends JFrame{
 	}
 	
 	public PhoneBookManager() {
-		
-		
+
 		phoneBook = new ContactList();
 		this.observers = new ArrayList<ContactObserver>();
-
-		
 	}
 	
 	// Register Observer - Observer Design Pattern
