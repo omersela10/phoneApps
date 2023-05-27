@@ -1,6 +1,10 @@
 package phoneApplications;
 
 import java.util.*;
+
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+
 import java.io.*;
 
 public class ContactList {
@@ -15,22 +19,25 @@ public class ContactList {
 		
 		this.contactList = new ArrayList<Contact>();
 	}
-
+	
+	// Getter
+	public ArrayList<Contact> getList() {
+		return this.contactList;
+	}
+	
 	// Methods : 
 	
 	// Add contact 
 	public void addContact(Contact anyContact) {
 		
 		// Check if any contact with this name already exist in the list.
-		for(Contact contact : this.contactList) {
-			
-			if(contact.getName().equals(anyContact.getName()) == true) {
-				
-				System.out.println("Contact " + anyContact.getName() + " already exist");
-				return;
-			}
-			
-		}
+		//Contact exist = this.searchByName(anyContact.getName());
+		
+		//if(exist == null) {
+			// Notify to user and return
+			//JOptionPane.showMessageDialog(null,anyContact.getName() + " already exist in the list");
+			//return;
+		//}
 		
 		// Build Contact
 		Contact newContact = new Contact(anyContact);
@@ -38,7 +45,7 @@ public class ContactList {
 		this.contactList.add(newContact);
 		
 		// Notify upon insertion
-		System.out.println("Contact " + newContact + "added.");
+		JOptionPane.showMessageDialog(null, newContact + " added to the list");
 	}
 	
 	// Iterator
@@ -47,6 +54,7 @@ public class ContactList {
 		Iterator<Contact> iterator = this.contactList.iterator();
 		return iterator;		
 	}
+	
 	
 	
 	// Remove contact
@@ -70,66 +78,44 @@ public class ContactList {
 		
 		// Print result
 		if (anyName == false) {
-			System.out.println(name + " does not exist in the contact list.");
+			JOptionPane.showMessageDialog(null, name + " does not exist the contact list.");
 		}
 		else {
-			System.out.println(name + " removed from contact list.");
+			JOptionPane.showMessageDialog(null, name + " removed from contact list.");
 		}
 		
 		return returnContact;
 	}
 	
 	// Print list
-	public void printList () {
+	public void printList (JTextArea phoneBookTextArea) {
 		
-		// Print the list
-		for(Contact anyContact : this.contactList) {
-			
-			System.out.println(anyContact);
-		}
+		phoneBookTextArea.append("The Phone Book: \n");
+		 // Append each contact to the text area
+        for (Contact contact : this.getList()) {
+            phoneBookTextArea.append(contact.toString());
+        }
 		
 		
 	}
 	
 	// Search for name in the Phone Book
-	//שיניתי לפונקציה שמחזירה ערך
 	public boolean searchByName (String name) {
 			
-			// Check if the contact exist an remove it.
+			// Check if the contact exist and display it.
 			for(Contact contact : this.contactList) {
 				
 				if(contact.getName().equals(name) == true) {
-					System.out.print(contact);
+					JOptionPane.showMessageDialog(null, contact + " in the contact list.");
 					return true;
 				}
 	
 			}
-			System.out.println( name + " does not in the contact list.");
-			return false;
-			}
-		
-	/*public void searchByName (String name) {
-		
-		boolean exist = false;
-		
-		// Check if the contact exist an remove it.
-		for(Contact contact : this.contactList) {
 			
-			if(contact.getName().equals(name) == true) {
-				
-				// Found and display
-				exist = true;
-				System.out.print(contact);
-			}
-
-		}
-		
-		
-		if (exist == false) {
-			System.out.println( name + " does not in the contact list.");
-		}
-		
-	}*/
+			JOptionPane.showMessageDialog(null, name + " does not in the contact list.");
+			return false;
+	}
+	
 	
 	// Sort List By name.
 	public void sortListByName () {
@@ -140,7 +126,7 @@ public class ContactList {
 		// Sort By name
 		Collections.sort(this.contactList, sortByName);
 		
-		System.out.println("Phone book sorted by name.");
+		JOptionPane.showMessageDialog(null,"Phone book sorted by name.");
 	}
 	
 	// Sort List By Phone Number.
@@ -152,7 +138,7 @@ public class ContactList {
 		// Sort By phone number
 		Collections.sort(this.contactList, sortByPhone);
 		
-		System.out.println("Phone book sorted by phone.");
+		JOptionPane.showMessageDialog(null,"Phone book sorted by phone.");
 	}
 	
 
@@ -181,7 +167,7 @@ public class ContactList {
 			
 		}
 		
-		System.out.println("Duplicates removed.");
+		JOptionPane.showMessageDialog(null,"Duplicates removed.");
 	}
 
 	// Reverse list function
@@ -189,7 +175,7 @@ public class ContactList {
 		
 		Collections.reverse(this.contactList);
 		
-		System.out.println("Phone book reversed.");
+		JOptionPane.showMessageDialog(null,"Phone book reversed.");
 	}
 	
 	//Import phoneBook from txt file
@@ -219,12 +205,12 @@ public class ContactList {
 	        // Close file stream
 	        scanner.close();
 	        
-	        System.out.println("Phone book loaded from file.");
+	        JOptionPane.showMessageDialog(null,"Phone book loaded from file.");
         
 		} 
 		catch (Exception e) {
 			
-			System.out.println("An error occurred.");
+			JOptionPane.showMessageDialog(null,"An error occurred.");
 			e.printStackTrace();
 		}
 	
@@ -251,12 +237,12 @@ public class ContactList {
             // Close writer
             writer.close();
             
-            System.out.println("Phone book saved to file.");
+            JOptionPane.showMessageDialog(null,"Phone book saved to file.");
              
        } 
 	   catch (Exception e) {
 			
-            System.out.println("An error occurred.");
+		   JOptionPane.showMessageDialog(null,"An error occurred.");
             e.printStackTrace();
        } 
 	

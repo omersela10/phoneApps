@@ -1,106 +1,126 @@
 package phoneApplications;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.*;
-import java.io.*;
 
-// Group Serial Number: 1
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
-// Ahigad Genish  316228022
-// Omer Sela      316539535	
-// Shir Cohen     314624040
-// Almog Sharoni  208611764 
-// Yakov Avitan   205517089
+public class PhoneAppsMenu extends JFrame {
 
-public class PhoneAppsMenu{
+	private static PhoneBookManager phoneBookManager;
+    private static DiaryManager diaryManager;
+    //private static SmsManager smsManager;
+    //private static MediaManager mediaManager;
+    
+	// Main
+    public static void main(String[] args) {
+    	
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new PhoneAppsMenu();
+            }
+        });
+    }
+    
+    // Constructor
+    public PhoneAppsMenu() {
+    	
+    	 // Initialize the app managers
+        phoneBookManager = new PhoneBookManager();
+        diaryManager = new DiaryManager();
+        //smsManager = new SmsManager();
+        //mediaManager = new MediaManager();
+        //phoneBookManager
+        
+        setTitle("Phone Applications");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setPreferredSize(new Dimension(1000, 600));
 
-	private static PhoneBookManager ourPhoneBookManager;
-	//private static SMSManager ourSMSManager;
-	private static DiaryManager ourDiaryManager;
-	//private static MediaManager ourMediaManager;
-	
-	public static void main(String[] args) {
-		
-		// Hello message
-		System.out.println("Welcome to our Phone Apps applications!");
-		
-		// Create ContactList instance
-		ourPhoneBookManager = new PhoneBookManager();
-		//ourSMSListManager = new SMSManager();
-		ourDiaryManager = new DiaryManager();
-		//ourMediaManager = new MediaManager();
-		
-		ourPhoneBookManager.registerObserver(ourDiaryManager);
-		//ourPhoneBookManager.registerObserver(ourSMSManager);
-		
-		// Start application
-		startApp();
-		
-		return;
-	}
-	
-	
-		
-	// Print the menu and choose options.
-	public static void startApp() {
-		
-	
-		Scanner scanner = new Scanner(System.in);
-		
-		boolean exit = false;
-		
-	
-	    while (exit == false) {
-	    	 
-	    	printOptions();
-	    	
-		    String option = scanner.next();
-		    scanner.nextLine(); 
+        // Create the buttons with icons
+        JButton phoneBookButton = createButton("PhoneBook", "resources/phonebook.png");
+        JButton smsSenderButton = createButton("SMSSender", "resources/smssender.png");
+        JButton diaryButton = createButton("Diary", "resources/diary.png");
+        JButton mediaButton = createButton("Media", "resources/media.png");
 
-		    switch (option) {
+        // Create the main panel
+        JPanel mainPanel = new JPanel(new GridLayout(2, 2));
+        mainPanel.add(phoneBookButton);
+        mainPanel.add(smsSenderButton);
+        mainPanel.add(diaryButton);
+        mainPanel.add(mediaButton);
+        
+        // Create the copyright label
+        JLabel copyrightLabel = new JLabel("© Group Number 1");
+        copyrightLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-			    case "1":
-			    	ourPhoneBookManager.startApp();
-			    	break;
+        // Create the bottom panel and add the copyright label
+        JPanel bottomPanel = new JPanel(new BorderLayout());
+        bottomPanel.add(copyrightLabel, BorderLayout.CENTER);
 
-			    case "2":
-			    	//ourSMSManager.startApp();
-			    	break;
+        // Create the main container panel and add the main and bottom panels
+        JPanel containerPanel = new JPanel(new BorderLayout());
+        containerPanel.add(mainPanel, BorderLayout.CENTER);
+        containerPanel.add(bottomPanel, BorderLayout.SOUTH);
 
-			    case "3":
-					ourDiaryManager.startApp();
-					break;
+        // Add the container panel to the frame
+        add(containerPanel);
+ 
+        // Pack and display the frame
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+    
+    // Create Button and the event
+    private JButton createButton(String text, String iconFileName) {
+    	
+        JButton button = new JButton(text);
+        button.setIcon(new ImageIcon(iconFileName));
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                openAppWindow(text);
+            }
+        });
+        return button;
+    }
 
-			    case "4":
-					//ourMediaManager.startApp();
-					break;
+    // Open the desire app.
+    private void openAppWindow(String appName) {
+    	
+    	// Logic to open the app window based on the app name
+        switch (appName) {
+        case "PhoneBook":
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    new PhoneBookManager();
+                }
+            });
+            break;
+        case "Diary":
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    //new DiaryWindow(diaryManager);
+                }
+            });
+            break;
+        case "SMS":
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    //new SmsWindow(smsManager);
+                }
+            });
+            break;
+        case "Media":
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    //new MediaWindow(mediaManager);
+                }
+            });
+            break;
+        default:
+            System.out.println("Invalid app name.");
+            break;
+        }
+    }
 
-			    case "5":
-					// Exit.
-					System.out.println("Exiting...");
-					exit = true;
-					break;
-					
-			    default:
-			    	System.out.println("Invalid option. Try again.");
-			}
-
-		}
-	       
-	}
-	
-	// Print Options
-	public static void printOptions() {
-		
-		 // Print options
-		System.out.println("Enter an option:");
-		System.out.println("1. Phone Book");
-		System.out.println("2. SMS");
-		System.out.println("3. Diary");
-		System.out.println("4. Media");
-		System.out.println("5. Exit");
-	
-	}
-
+    
 }
