@@ -16,7 +16,14 @@ public class PhoneBookManager extends JFrame{
 		return phoneBook.searchByName(anyContact.getName());
 	}
 	
-	// Constructor
+	public static boolean isContactExist(String anyContactName) {
+		return phoneBook.searchByName(anyContactName);
+	}
+	
+	public static Contact ContactByName (String anyContactName) {
+		return phoneBook.searchContactByName(anyContactName);
+	}
+	
 	public PhoneBookManager() {
 		
 		setTitle("Phone Book");

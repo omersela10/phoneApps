@@ -46,6 +46,9 @@ public class Contact {
 	@Override
 	public boolean equals(Object obj) {
 		
+		if (obj == null) {
+			return false;
+		}
 		// Check if obj is Contact
 		if(obj instanceof Contact == true) {
 			// Casting

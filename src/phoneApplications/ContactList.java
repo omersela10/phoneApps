@@ -111,9 +111,43 @@ public class ContactList {
 				}
 	
 			}
-			
-			JOptionPane.showMessageDialog(null, name + " does not in the contact list.");
+			System.out.println( name + " does not in the contact list.");
 			return false;
+			}
+	
+	// Search for name in the Phone Book and return the contact
+	public Contact searchContactByName (String name) {
+		
+		// Check if the contact exist.
+		for(Contact contact : this.contactList) {
+			
+			if(contact.getName().equals(name) == true) {
+				
+				return contact;
+			}
+
+		}
+
+		return null;
+	}
+    
+	// Search name in the contact list
+	public boolean searchByName (String name) {
+		
+		boolean exist = false;
+		
+		// Check if the contact exist an display it.
+		for(Contact contact : this.contactList) {
+			
+			if(contact.getName().equals(name) == true){
+				JOptionPane.showMessageDialog(null, name + " exist in the contact list.");
+				return true;
+			}
+	
+		}
+
+		JOptionPane.showMessageDialog(null, name + " does not in the contact list.");
+		return false;
 	}
 	
 	
