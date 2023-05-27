@@ -2,6 +2,9 @@ package phoneApplications;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+
 public class SMSList {
 
 	private ArrayList<SMS> smsList;
@@ -38,14 +41,15 @@ public class SMSList {
 		// If there is a open SMS with the contact person
 		if (SMSContact != null) {
 			SMSContact.addContent(contentText);
+			JOptionPane.showMessageDialog(null, anyContact.getName() + " added.");
 		}
 		// if this is the first content with anyContact
 		else {
 			
 			this.getSMSList().add(new SMS(anyContact, contentText));
+			JOptionPane.showMessageDialog(null, anyContact.getName() + " added.");
 		}
 		
-		System.out.println("content added");
 	}
 	
 	public void deleteAllContentsWithContact (Contact anyContact) {
@@ -57,40 +61,40 @@ public class SMSList {
 		
 		if (SMSContact != null ) {
 			this.getSMSList().remove(SMSContact);
-			System.out.println("All the masseges of " + anyContact.getName() + "removed");
+			JOptionPane.showMessageDialog(null, "All the masseges of " + anyContact.getName() + "removed");
 			return;
 		}
 		
-		// else: not found anyContact in SMS list
-		System.out.println("There are no any messages from" + anyContact.getName());
+		// else: not found anyContact in SMS list.
+		JOptionPane.showMessageDialog(null, "There are no any messages from" + anyContact.getName());
 	}
 	
-	public void printAllContentsWithContact (Contact anyContact) {
+	public void printAllContentsWithContact (Contact anyContact, JTextArea SMSTextArea) {
 		
 		SMS SMSContact = this.containContact (anyContact);
 		
 		if (SMSContact != null) {
 			// found anyContact in SMS list
-			System.out.println(SMSContact.toString());
+			SMSTextArea.append(SMSContact.toString());
 			return;
 		}
 		
 		// else: not found anyContact in SMS list
-		System.out.println("There are no any messages from" + anyContact.getName());
+		SMSTextArea.append("There are no any messages from" + anyContact.getName());
 		
 	}
 	
-	public void printAllSMSList () {
+	public void printAllSMSList (JTextArea SMSTextArea) {
 		
-		System.out.println("SMS:");
+		SMSTextArea.append("SMS:");
 		
 		for (SMS it:this.getSMSList()) {
 			
-			System.out.print(it.toString());
+			SMSTextArea.append(it.toString());
 		}
 	}
 	
-	public void printAllContactContainDesireSentence (String sentence) {
+	public void printAllContactContainDesireSentence (String sentence, JTextArea SMSTextArea) {
 		
 		ArrayList<Contact> containSentenceContacts = new ArrayList<Contact>();
 		
@@ -108,17 +112,17 @@ public class SMSList {
 		
 		if (containSentenceContacts.size() == 0) {
 			
-			System.out.println("There are no messages with the sentence: " + sentence);
+			SMSTextArea.append("There are no messages with the sentence: " + sentence);
 		}
 		
 		else {
 			
-			System.out.println("List of contacts that their SMS contain the sentence:");
+			SMSTextArea.append("List of contacts that their SMS contain the sentence:");
 			
 			//print all contact that there SMS contain the sentence
 			for (Contact it:containSentenceContacts) {
 				
-				System.out.print(it.toString());
+				SMSTextArea.append(it.toString());
 			}
 		}
 	}

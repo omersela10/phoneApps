@@ -8,7 +8,7 @@ public class PhoneAppsMenu extends JFrame {
 
 	private static PhoneBookManager phoneBookManager;
     private static DiaryManager diaryManager;
-    //private static SmsManager smsManager;
+    private static SMSManager smsManager;
     //private static MediaManager mediaManager;
     
 	// Main
@@ -27,7 +27,7 @@ public class PhoneAppsMenu extends JFrame {
     	 // Initialize the app managers
         phoneBookManager = new PhoneBookManager();
         diaryManager = new DiaryManager();
-        //smsManager = new SmsManager();
+        smsManager = new SMSManager();
         //mediaManager = new MediaManager();
         //phoneBookManager
         
@@ -104,10 +104,10 @@ public class PhoneAppsMenu extends JFrame {
                 }
             });
             break;
-        case "SMS":
+        case "SMSSender":
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
-                    //new SmsWindow(smsManager);
+                   SMSWindow.getInstance(smsManager);
                 }
             });
             break;
