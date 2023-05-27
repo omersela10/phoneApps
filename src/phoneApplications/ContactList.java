@@ -99,22 +99,6 @@ public class ContactList {
 		
 	}
 	
-	// Search for name in the Phone Book
-	public boolean searchByName (String name) {
-			
-			// Check if the contact exist and display it.
-			for(Contact contact : this.contactList) {
-				
-				if(contact.getName().equals(name) == true) {
-					JOptionPane.showMessageDialog(null, contact + " in the contact list.");
-					return true;
-				}
-	
-			}
-			System.out.println( name + " does not in the contact list.");
-			return false;
-			}
-	
 	// Search for name in the Phone Book and return the contact
 	public Contact searchContactByName (String name) {
 		

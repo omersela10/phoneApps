@@ -91,7 +91,7 @@ public class PhoneAppsMenu extends JFrame {
         case "PhoneBook":
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
-                    new PhoneBookManager();
+                    PhoneBookWindow.getInstance(phoneBookManager);
                 }
             });
             break;
