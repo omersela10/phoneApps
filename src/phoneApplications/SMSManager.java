@@ -3,7 +3,7 @@ package phoneApplications;
 import java.util.Scanner;
 
 // Implements ContactObserver interface to listening of removedContacts in the phone book app
-public class SMSManager implements ContactObserver {
+public class SMSManager implements ContactObservable {
 
 	// Data Member
 	private SMSList sms;

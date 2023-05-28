@@ -7,7 +7,7 @@ import java.util.*;
 public class PhoneBookManager extends JFrame{
 
 	private static ContactList phoneBook;
-	private static ArrayList<ContactObserver> observers;
+	private static ArrayList<ContactObservable> observers;
 	
 
 	
@@ -29,17 +29,17 @@ public class PhoneBookManager extends JFrame{
 	public PhoneBookManager() {
 
 		phoneBook = new ContactList();
-		this.observers = new ArrayList<ContactObserver>();
+		this.observers = new ArrayList<ContactObservable>();
 	}
 	
 	// Register Observer - Observer Design Pattern
-	public static void registerObserver(ContactObserver observer) {
+	public static void registerObserver(ContactObservable observer) {
 		
         observers.add(observer);
     }
 
 	// Unregister Observer - Observer Design Pattern
-    public static void unregisterObserver(ContactObserver observer) {
+    public static void unregisterObserver(ContactObservable observer) {
     	
         observers.remove(observer);
     }
@@ -47,7 +47,7 @@ public class PhoneBookManager extends JFrame{
     // Notify Observers - Observer Design Pattern
     public static void notifyObservers(Contact contact) {
     	
-        for (ContactObserver observer : observers) {
+        for (ContactObservable observer : observers) {
             observer.onContactRemoved(contact);
         }
     }
