@@ -94,7 +94,7 @@ public class MediaWindow extends JFrame{
 	    	return button; 
 	  }
 	  
-	  
+	  // Handle Buttons event
 	  private void handleButtonAction(String buttonText) {
 		  
 		  // TODO: 

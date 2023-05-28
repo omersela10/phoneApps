@@ -9,7 +9,7 @@ public class PhoneAppsMenu extends JFrame {
 	private static PhoneBookManager phoneBookManager;
     private static DiaryManager diaryManager;
     private static SMSManager smsManager;
-    //private static MediaManager mediaManager;
+    private static MediaManager mediaManager;
     
 	// Main
     public static void main(String[] args) {
@@ -28,7 +28,7 @@ public class PhoneAppsMenu extends JFrame {
         phoneBookManager = new PhoneBookManager();
         diaryManager = new DiaryManager();
         smsManager = new SMSManager();
-        //mediaManager = new MediaManager();
+        mediaManager = new MediaManager();
     
         // Add Observers - Observer Design Pattern
         phoneBookManager.registerObserver(diaryManager);
@@ -119,7 +119,7 @@ public class PhoneAppsMenu extends JFrame {
         case "Media":
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
-                    //new MediaWindow(mediaManager);
+                    MediaWindow.getInstance(mediaManager);
                 }
             });
             break;

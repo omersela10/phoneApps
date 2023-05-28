@@ -70,7 +70,7 @@ public class MediaPlayer {
     private static void openWebBrowser(String url) throws IOException, URISyntaxException {
         Desktop desktop = Desktop.getDesktop();
         
-        if (desktop.isSupported(Desktop.Action.BROWSE)) {
+        if (desktop.isSupported(Desktop.Action.BROWSE) == true) {
             desktop.browse(new URI(url));
         }
     }
