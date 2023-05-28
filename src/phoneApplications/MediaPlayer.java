@@ -66,7 +66,7 @@ public class MediaPlayer {
         openWebBrowser(youtubeUrl);
 	}
 	
-	// Help method to open the link via browser
+	// Help method to open the link via browser//TODO add enter
     private static void openWebBrowser(String url) throws IOException, URISyntaxException {
         Desktop desktop = Desktop.getDesktop();
         
@@ -82,8 +82,9 @@ public class MediaPlayer {
     	
     	// Print all the media.
     	for(Media anyMedia: this.getMediaPlayer()) {
+    		//TODO add enter
+    		mediaTextArea.append(anyMedia.toString() + "\n");
     		
-    		mediaTextArea.append(anyMedia.toString());
     	}
     	
     }
