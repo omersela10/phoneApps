@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -99,8 +101,53 @@ public class MediaWindow extends JFrame{
 	  private void handleButtonAction(String buttonText) {
 		  
 		  // TODO: 
+		  switch(buttonText) {
+		      case "Add Media":
+		    	  addMedia();
+		    	  break;
+		    	  
+		      case "Play Media By Name":
+		    	  try {
+		    		  playMediaByName();
+		    	  }
+		    	  catch(Exception e) {
+		    		  
+		    	  }
+		    	  break;
+		    	  
+		  	  case "Play All Media":
+		  		  playAllMedia();
+		  		  break;
+		  }
 		  
 	  }
+
+	// Add media function
+	private void addMedia() {
+		// TODO: Get the media from user, ask for Video\ MUSIC by radio button. name and duration
+		// Add it to the media list.
+		
+	}
+	
+	// Play Media by name
+	private void playMediaByName() throws IOException, URISyntaxException {
+		
+		// TODO: Get The mediaName from user and check it's not null.
+		String mediaName;
+		mediaTextArea.setText("");
+		mediaManager.getMedaiaPlayer().playMediaByName(mediaName, mediaTextArea);
+	}
+	
+	// Add media function
+	private void playAllMedia() {
+		
+		// Print all Media
+		mediaTextArea.setText("");
+		mediaManager.getMedaiaPlayer().playingAllMedia(mediaTextArea);
+		
+	}
+
+	
 	  
  }
     
