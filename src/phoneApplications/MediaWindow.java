@@ -133,7 +133,7 @@ public class MediaWindow extends JFrame{
 	private void playMediaByName() throws IOException, URISyntaxException {
 		
 		// TODO: Get The mediaName from user and check it's not null.
-		String mediaName;
+		String mediaName = "";
 		mediaTextArea.setText("");
 		mediaManager.getMedaiaPlayer().playMediaByName(mediaName, mediaTextArea);
 	}
