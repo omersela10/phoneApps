@@ -76,7 +76,8 @@ public class MediaWindow extends JFrame{
 		  // Add the main panel to the frame 
 		  mediaWindowInstance.add(mainPanel);
 	  
-		  // Pack and display the frame SMSWindowInstance.pack();
+		  // Pack and display 
+		  mediaWindowInstance.pack();
 		  mediaWindowInstance.setLocationRelativeTo(null);
 		  mediaWindowInstance.setVisible(true); 
 	  }
