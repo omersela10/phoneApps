@@ -1,10 +1,8 @@
 package phoneApplications;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+
 import java.util.*;
 
-public class PhoneBookManager extends JFrame{
+public class PhoneBookManager{
 
 	private static ContactList phoneBook;
 	private static ArrayList<ContactObservable> observers;

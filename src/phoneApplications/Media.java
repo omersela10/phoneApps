@@ -32,10 +32,15 @@ public abstract class Media {
 	public void setMediaDuration(Duration mediaDuration) {
 		this.mediaDuration = mediaDuration;
 	}
-
+	
+	// Return the Duration in format of HH:MM:SS
+	private String printDurationInFormat() {
+		
+		return this.getMediaDuration().toHoursPart() + ":" + this.getMediaDuration().toMinutesPart() + ":" + this.getMediaDuration().toSecondsPart();
+	}
 	@Override 
 	public String toString() {
 		
-		return "Name: " + this.getMediaName() + "Duration: " + this.getMediaDuration();
+		return "Name: " + this.getMediaName() + " Duration: " + printDurationInFormat();
 	}
 }

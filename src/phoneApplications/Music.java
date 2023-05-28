@@ -13,7 +13,7 @@ public class Music extends Media {
 	@Override 
 	public String toString() {
 		
-		return "The Music : " + super.toString() + " is playing now";
+		return "The Music : " + super.toString() + " is playing now \n";
 	}
 
 }

@@ -20,7 +20,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-
+//Window will be Singleton
 public class DiaryWindow extends JFrame{
 
 	// Data Members
@@ -286,10 +286,12 @@ private void addOrRemoveEvent(boolean addOrRemove) {
     	dialog.add(dateLabel);
     	dialog.add(dateSpinner);
 
+
     	// Create input fields for duration
-    	JTextField durationField = new JTextField();
+    	SpinnerNumberModel durationModel = new SpinnerNumberModel(1, 1, 60, 1);
+    	JSpinner durationSpinner = new JSpinner(durationModel);
     	dialog.add(new JLabel("Duration (minutes):"));
-    	dialog.add(durationField);
+    	dialog.add(durationSpinner);
     	
     	// Create radio buttons for contact picker
     	JRadioButton contactRadioButton = new JRadioButton("Contact");
@@ -354,9 +356,12 @@ private void addOrRemoveEvent(boolean addOrRemove) {
     	    	// Parse to Date, Hour, Minutes
     	        LocalDateTime theLocalDateTime = LocalDateTime.parse(formattedDateTime, formatter);
     	        // Retrieve the duration
-    	        int duration = Integer.parseInt(durationField.getText());
+    	        int duration = (int)durationSpinner.getValue();
+    	        
+    	     
     	        Duration meetingDuration = Duration.ofMinutes(duration);
     	      
+    	        
     	        // Retrieve the contact name or description based on the selected radio button
     	        String contactName = "";
     	        String description = "";

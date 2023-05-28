@@ -1,5 +1,6 @@
 package phoneApplications;
 import java.awt.BorderLayout;
+
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -12,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+//Window will be Singleton
 public class SMSWindow extends JFrame{
 	
 	private static SMSWindow SMSWindowInstance;
@@ -24,6 +26,7 @@ public class SMSWindow extends JFrame{
         this.SmsManager = manager;
     }
     
+	// Get Instance - Singleton Design Pattern 
     public static synchronized SMSWindow getInstance(SMSManager manager) {
     	
         if (SMSWindowInstance == null) {

@@ -13,7 +13,7 @@ public class Video extends Media {
 	@Override 
 	public String toString() {
 			
-		return "The Video : " + super.toString() + " is streaming now";
+		return "The Video : " + super.toString() + " is streaming now \n";
 	}
 
 }

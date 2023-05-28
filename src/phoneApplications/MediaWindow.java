@@ -2,6 +2,7 @@ package phoneApplications;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +11,7 @@ import java.net.URISyntaxException;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -30,7 +32,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerNumberModel;
 
-
+// Window will be Singleton
 public class MediaWindow extends JFrame{
 
 	
@@ -44,6 +46,7 @@ public class MediaWindow extends JFrame{
 	       this.mediaManager = newMediaManager;
 	  }
 	  
+	  // Get Instance - Singleton Design Pattern 
 	  public static synchronized MediaWindow getInstance(MediaManager newMediaManager) {
 	  
 		  if (mediaWindowInstance == null) { 
@@ -116,19 +119,13 @@ public class MediaWindow extends JFrame{
 	  // Handle Buttons event
 	  private void handleButtonAction(String buttonText) {
 		  
-		  // TODO: 
 		  switch(buttonText) {
 		      case "Add Media":
 		    	  addMedia();
 		    	  break;
 		    	  
 		      case "Play Media By Name":
-		    	  try {
-		    		  playMediaByName();
-		    	  }
-		    	  catch(Exception e) {
-		    		  
-		    	  }
+		    	  playMediaByName();
 		    	  break;
 		    	  
 		  	  case "Play All Media":
@@ -140,165 +137,116 @@ public class MediaWindow extends JFrame{
 
 	// Add media function
 	private void addMedia() {
-		// TODO: Get the media from user, ask for Video\ MUSIC by radio button. name and duration
-		// Add it to the media list.
-    	// Create a custom dialog to get the event details
-    	JDialog dialog = new JDialog();
-    	dialog.setTitle("Add Media");
-    	dialog.setModal(true);
+		
+	        // Create a custom dialog to get the media details
+	        JDialog dialog = new JDialog();
+	        dialog.setTitle("Add Media");
+	        dialog.setModal(true);
+	        dialog.setLayout(new GridLayout(5, 2));
 
-    	// Create input fields for Name
-//    	SpinnerDateModel MediaModel = new SpinnerDateModel();
-    	
-    	JTextField mediaLabel = new JTextField();
-    	dialog.add(new JLabel("Name:"));
-    	dialog.add(mediaLabel);
+	        // Create input fields for Name
+	        JTextField mediaLabel = new JTextField();
+	        dialog.add(new JLabel("Media Name:"));
+	        dialog.add(mediaLabel);
 
-    	
-    	// Create input fields for duration
-    	SpinnerNumberModel mediaModel = new SpinnerNumberModel();
-    	JSpinner mediaSpinner = new JSpinner(mediaModel);
-    	dialog.add(new JLabel("Duration (minutes):"));
-    	dialog.add(mediaSpinner);
-//    	dialog.add(durationField);
-    	
-    	// Create radio buttons for contact picker
-    	JRadioButton musictRadioButton = new JRadioButton("Music");
-    	JRadioButton videoRadioButton = new JRadioButton("Video");
-    	ButtonGroup radioButtonGroup = new ButtonGroup();
-    	radioButtonGroup.add(musictRadioButton);
-    	radioButtonGroup.add(videoRadioButton);
-    	dialog.add(musictRadioButton);
-    	dialog.add(videoRadioButton);
-    	
-    	// Create a button to confirm the media creation
-    	JButton confirmButton = new JButton("Add Media");
-    	confirmButton.addActionListener(new ActionListener() {
-    		
-    	    public void actionPerformed(ActionEvent e) {
-    	    	
-    	    try {
-    	    	// Retrieve the selected date and time
-    	    	Integer time = (int) mediaSpinner.getModel().getValue();
-    	    	Duration duration = Duration.ofMinutes(time);
-//    	    	// Convert Date to LocalDateTime
-//    	    	Instant instant = dateTime.toInstant();
-//    	    	ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
-//    	    	LocalDateTime localDateTime = zonedDateTime.toLocalDateTime();
-//    	    	DateTimeFormatter   formatter = DateTimeFormatter.ofPattern("dd - MM - yyyy HH:mm");
-//    	        String formattedDateTime = localDateTime.format(formatter);
-//    	        
-//    	    	// Parse to Date, Hour, Minutes
-//    	        LocalDateTime theLocalDateTime = LocalDateTime.parse(formattedDateTime, formatter);
-//    	        // Retrieve the duration
-//    	        int duration = Integer.parseInt(durationField.getText());
-//    	        Duration meetingDuration = Duration.ofMinutes(duration);
-    	      
-    	    	
-    	        // Retrieve the contact name or description based on the selected radio button
-    	        String mediaName = mediaLabel.getText();
-    	        Media media = null;
-    	        
-    	        if (musictRadioButton.isSelected() == true) {
-    	        //TODO: music checked
-    	          Music newMusic = new Music(mediaName, duration);
-    	          media = newMusic;
-    	        } else if (videoRadioButton.isSelected() == true) {
-    	        //TODO: video checked
-    	           Video newVideo = new Video(mediaName, duration);
-     	          media = newVideo;
+	        // Create time picker fields for duration
+	        JSpinner hoursSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 99, 1));
+	        JSpinner minutesSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
+	        JSpinner secondsSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
 
-    	        }
-    	        //TODO: add media to DB
-    	       
-    	        mediaManager.getMedaiaPlayer().addMedia(media);
-    	        
-    	        // Close the dialog
-    	        dialog.dispose();
-    	    	}
-    	    	catch (Exception eexception) {
-    				
-    				JOptionPane.showMessageDialog(null, eexception);
-    				eexception.printStackTrace();
-    			}
-    	    }
-    	});
-    	dialog.add(confirmButton);
-    	
-    	
-    	// Set the layout manager and pack the dialog
-    	dialog.setLayout(new GridLayout(4, 3));
-    	dialog.pack();
+	        JPanel durationPanel = new JPanel(new FlowLayout());
+	        durationPanel.add(hoursSpinner);
+	        durationPanel.add(new JLabel("h "));
+	        durationPanel.add(minutesSpinner);
+	        durationPanel.add(new JLabel("m "));
+	        durationPanel.add(secondsSpinner);
+	        durationPanel.add(new JLabel("s "));
 
-    	// Display the dialog to the user
-    	dialog.setVisible(true);
+	        dialog.add(new JLabel("Duration:"));
+	        dialog.add(durationPanel);
+
+	        // Create radio buttons for media type
+	        JRadioButton musicRadioButton = new JRadioButton("Music");
+	        JRadioButton videoRadioButton = new JRadioButton("Video");
+	        // Set "Music" as selected by default
+	        musicRadioButton.setSelected(true); 
+	        ButtonGroup radioButtonGroup = new ButtonGroup();
+	        radioButtonGroup.add(musicRadioButton);
+	        radioButtonGroup.add(videoRadioButton);
+	        dialog.add(musicRadioButton);
+	        dialog.add(videoRadioButton);
+
+	        // Create a button to confirm the media creation
+	        JButton confirmButton = new JButton("Add Media");
+	        confirmButton.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	                try {
+	                    // Retrieve the hours, minutes, and seconds from the spinners
+	                    int hours = (int) hoursSpinner.getValue();
+	                    int minutes = (int) minutesSpinner.getValue();
+	                    int seconds = (int) secondsSpinner.getValue();
+
+	                    // Calculate the total duration in seconds
+	                    long totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
+	                    Duration duration = Duration.ofSeconds(totalSeconds);
+
+	                    // Retrieve the media name
+	                    String mediaName = mediaLabel.getText();
+	                    if(mediaName == null || mediaName.equals("") == true || totalSeconds == 0){
+	                    	JOptionPane.showMessageDialog(null, "Please insert Media Name and Duration");
+	                    	return;
+	                    }
+	                    
+
+	                    // Create the media object based on the selected radio button
+	                    Media theMedia;
+	                    if (musicRadioButton.isSelected() == true) {
+	                    	theMedia = new Music(mediaName, duration);
+	                    } else {
+	                    	theMedia = new Video(mediaName, duration);
+	                    }
+	                    
+	                    // Add this media to the list.
+	                    mediaManager.getMedaiaPlayer().addMedia(theMedia);
+	                  
+	                    
+
+	                    // Close the dialog
+	                    dialog.dispose();
+	                } 
+	                catch (Exception exception) {
+	                    JOptionPane.showMessageDialog(null, "Invalid duration format");
+	                }
+	            }
+	        });
+	        dialog.add(confirmButton);
+
+	        // Set the layout manager and pack the dialog
+	        dialog.setLayout(new GridLayout(5, 2));
+	        dialog.pack();
+
+	        // Display the dialog to the user
+	        dialog.setVisible(true);
+	    }
     	
-	}
 	
 	// Play Media by name
-	private void playMediaByName() throws IOException, URISyntaxException {
+	private void playMediaByName() {
 		
-		// TODO: Get The mediaName from user and check it's not null.
-			// Create a custom dialog to get the event details
-	    	JDialog dialog = new JDialog();
-	    	dialog.setTitle("Media Name");
-	    	dialog.setModal(true);
-
-	    	//Create input fields for Name
-	    	//SpinnerDateModel MediaModel = new SpinnerDateModel();
-	    	
-	    	JTextField mediaLabel = new JTextField();
-	    	dialog.add(new JLabel("Media Name:"));
-	    	dialog.add(mediaLabel);
-	    	
-	    	// Create a button to confirm the media creation
-	    	JButton confirmButton = new JButton("Play Media");
-	    	confirmButton.addActionListener(new ActionListener() {
-	    		
-	    	    public void actionPerformed(ActionEvent e) {
-	    	    	
-	    	    try {
-	 
-	    	     	    	
-	    	        // Retrieve the media name for search
-	    	        String mediaForSearch = mediaLabel.getText();
-	    	        
-	    	       
-	    	        mediaManager.getMedaiaPlayer().playMediaByName(mediaForSearch, mediaTextArea);
-	    	        
-	    	        // Close the dialog
-	    	        dialog.dispose();
-	    	        
-	    	    	//Play the song
-	    			String mediaName = mediaForSearch;
-	    			mediaTextArea.setText("");
-	    			mediaManager.getMedaiaPlayer().playMediaByName(mediaName, mediaTextArea);
-	    	    	}
-	    	    	catch (Exception eexception) {
-	    				
-	    				JOptionPane.showMessageDialog(null, eexception);
-	    				eexception.printStackTrace();
-	    			}
-	    	    }
-	    	});
-	    	dialog.add(confirmButton);
-	    	
-	    	// Set the layout manager and pack the dialog
-	    	dialog.setLayout(new GridLayout(4, 3));
-	    	dialog.pack();
-
-	    	// Display the dialog to the user
-	    	dialog.setVisible(true);
-
-
+		// Open dialog to get mediaName details and retrieve the media name for play
+	    String mediaName = JOptionPane.showInputDialog(this, "Enter Media Name:");   	    
+		if(mediaName == null) {
+			return;
+		}
+			
+		mediaManager.getMedaiaPlayer().playMediaByName(mediaName, mediaTextArea);
 			
 	}
 	
-	// Add media function
+	// Play all media function
 	private void playAllMedia() {
 		
 		// Print all Media
-		mediaTextArea.setText("");
 		mediaManager.getMedaiaPlayer().playingAllMedia(mediaTextArea);
 		
 	}

@@ -30,6 +30,12 @@ public class ContactList {
 	// Add contact 
 	public void addContact(Contact anyContact) {
 		
+		// Check valid input from user / file by regular expression
+		if(anyContact.getName().matches("[A-Za-z]+") == false || anyContact.getPhoneNumber().matches("[0-9]+") == false) {
+			JOptionPane.showMessageDialog(null,"Name must contain only letters and Phone must contain only numbers");
+			return;
+		}
+		
 		// Check if any contact with this name already exist in the list.
 		Contact exist = this.searchContactByName(anyContact.getName());
 		

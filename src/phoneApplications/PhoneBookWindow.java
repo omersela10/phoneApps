@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
-
+//Window will be Singleton
 public class PhoneBookWindow extends JFrame {
 
 	// Data Members
@@ -38,7 +38,6 @@ public class PhoneBookWindow extends JFrame {
     	phoneBookWindowInstance.setPreferredSize(new Dimension(800, 400));
 
         // Set up the window components 
-        // ...
     	// Create the buttons
     	JButton addContactButton = phoneBookWindowInstance.createButton("Add Contact");
     	JButton removeContactButton = phoneBookWindowInstance.createButton("Remove Contact");

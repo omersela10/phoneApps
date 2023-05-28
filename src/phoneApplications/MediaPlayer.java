@@ -44,7 +44,7 @@ public class MediaPlayer {
 	}
 	
 	// Play media by name 
-	public void playMediaByName(String givenName, JTextArea mediaTextArea) throws IOException, URISyntaxException {
+	public void playMediaByName(String givenName, JTextArea mediaTextArea) {
 		
 		Media theMedia = this.returnMediaByName(givenName);
 		// Check if it's exist
@@ -52,38 +52,24 @@ public class MediaPlayer {
 			JOptionPane.showMessageDialog(null,"The " + givenName + " Not exist");
 			return;
 		}
-		
+		// Clear all text
+		mediaTextArea.setText("");
 		mediaTextArea.append(theMedia.toString());
-		// Playing this Media via Youtube : 
-		
-		// Prepare the search query
-        String searchQuery = givenName + " official audio";
-
-        // Construct the YouTube search URL
-        String youtubeUrl = "https://www.youtube.com/results?search_query=" + searchQuery;
-
-        // Open the YouTube search URL in a web browser
-        openWebBrowser(youtubeUrl);
 	}
 	
-	// Help method to open the link via browser//TODO add enter
-    private static void openWebBrowser(String url) throws IOException, URISyntaxException {
-        Desktop desktop = Desktop.getDesktop();
-        
-        if (desktop.isSupported(Desktop.Action.BROWSE) == true) {
-            desktop.browse(new URI(url));
-        }
-    }
-    
+
+ 
     // Playing all the media
     public void playingAllMedia(JTextArea mediaTextArea) {
     	
+    	// Clear all text
+    	mediaTextArea.setText("");
     	mediaTextArea.append("All the media: \n");
     	
     	// Print all the media.
     	for(Media anyMedia: this.getMediaPlayer()) {
-    		//TODO add enter
-    		mediaTextArea.append(anyMedia.toString() + "\n");
+ 
+    		mediaTextArea.append(anyMedia.toString());
     		
     	}
     	
