@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -332,7 +333,7 @@ private void addOrRemoveEvent(boolean addOrRemove) {
     		confirmButton = new JButton("Add Event");
     	}
     	else {
-    		confirmButton = new JButton("Remove Button");
+    		confirmButton = new JButton("Remove Event");
     	}
     	
     	confirmButton.addActionListener(new ActionListener() {
@@ -347,6 +348,11 @@ private void addOrRemoveEvent(boolean addOrRemove) {
     	    	Instant instant = dateTime.toInstant();
     	    	ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
     	    	LocalDateTime localDateTime = zonedDateTime.toLocalDateTime();
+    	    	DateTimeFormatter   formatter = DateTimeFormatter.ofPattern("dd - MM - yyyy HH:mm");
+    	        String formattedDateTime = localDateTime.format(formatter);
+    	        
+    	    	// Parse to Date, Hour, Minutes
+    	        LocalDateTime theLocalDateTime = LocalDateTime.parse(formattedDateTime, formatter);
     	        // Retrieve the duration
     	        int duration = Integer.parseInt(durationField.getText());
     	        Duration meetingDuration = Duration.ofMinutes(duration);
@@ -368,11 +374,11 @@ private void addOrRemoveEvent(boolean addOrRemove) {
     	            // Check if add or remove
     	            if(addOrRemove == true) {
     	            	// Add it.
-    	            	diaryManager.getDiary().addEvent(new MeetingEvent(localDateTime, meetingDuration, theContact));
+    	            	diaryManager.getDiary().addEvent(new MeetingEvent(theLocalDateTime, meetingDuration, theContact));
     	            }
     	            else {
     	            	// Remove it
-    	            	diaryManager.getDiary().removeEvent(new MeetingEvent(localDateTime, meetingDuration, theContact));
+    	            	diaryManager.getDiary().removeEvent(new MeetingEvent(theLocalDateTime, meetingDuration, theContact));
     	            }
     	            
     	        } else if (descriptionRadioButton.isSelected() == true) {
@@ -381,11 +387,11 @@ private void addOrRemoveEvent(boolean addOrRemove) {
     	            // Check if add or remove
     	            if(addOrRemove == true) {
     	            	// Add it.
-    	            	diaryManager.getDiary().addEvent(new GeneralEvent(localDateTime, meetingDuration, description));
+    	            	diaryManager.getDiary().addEvent(new GeneralEvent(theLocalDateTime, meetingDuration, description));
     	            }
     	            else {
     	            	// Remove it
-    	            	diaryManager.getDiary().removeEvent(new GeneralEvent(localDateTime, meetingDuration, description));
+    	            	diaryManager.getDiary().removeEvent(new GeneralEvent(theLocalDateTime, meetingDuration, description));
     	            }
     	           
     	            

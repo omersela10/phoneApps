@@ -34,6 +34,7 @@ public class PhoneAppsMenu extends JFrame {
         phoneBookManager.registerObserver(diaryManager);
         phoneBookManager.registerObserver(smsManager);
         
+        // Create GUI :
         setTitle("Phone Applications");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(1000, 600));
@@ -98,6 +99,7 @@ public class PhoneAppsMenu extends JFrame {
                 }
             });
             break;
+            
         case "Diary":
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
@@ -105,6 +107,7 @@ public class PhoneAppsMenu extends JFrame {
                 }
             });
             break;
+            
         case "SMSSender":
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
@@ -112,6 +115,7 @@ public class PhoneAppsMenu extends JFrame {
                 }
             });
             break;
+            
         case "Media":
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
@@ -119,8 +123,9 @@ public class PhoneAppsMenu extends JFrame {
                 }
             });
             break;
+            
         default:
-            System.out.println("Invalid app name.");
+        	JOptionPane.showMessageDialog(this,"Invalid Option");
             break;
         }
     }

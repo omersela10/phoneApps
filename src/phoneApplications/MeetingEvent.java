@@ -38,7 +38,7 @@ public class MeetingEvent extends Event{
 	@Override
 	public String toString () 
 	{	
-		return "Event Details:\n" + super.toString() + "Meeting with" + "Contact: " + this.getContact() + "\n";
+		return "Event Details:\n" + super.toString() + "Meeting with Contact: " + this.getContact() + "\n";
 	}
 	
 	@Override

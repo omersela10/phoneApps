@@ -82,8 +82,8 @@ public class SMSWindow extends JFrame{
     	SMSWindowInstance.setVisible(true);	
     }
     	
-    	// Create Buttons
-        private JButton createButton(String text) {
+    // Create Buttons
+    private JButton createButton(String text) {
         	
             JButton button = new JButton(text);
             button.addActionListener(new ActionListener() {
@@ -92,102 +92,102 @@ public class SMSWindow extends JFrame{
                 }
             });
             return button;
-        }
+    }
         
-     // Handled button 
-        private void handleButtonAction(String buttonText) {
+    // Handled button 
+    private void handleButtonAction(String buttonText) {
         	
-            switch (buttonText) {
+    	switch (buttonText) {
             
-                case "Add message":
+            case "Add message":
                 	
-                    // Open dialog to get contact name
-                    String name = JOptionPane.showInputDialog(this, "Enter name from phone book:");
-                    // Open dialog to get contact message
-                    String text = JOptionPane.showInputDialog(this, "Enter the message with this contact:");
+                // Open dialog to get contact name
+                String name = JOptionPane.showInputDialog(this, "Enter name from phone book:");
+                // Open dialog to get contact message
+                String text = JOptionPane.showInputDialog(this, "Enter the message with this contact:");
                     
-                    if (text == null || name == null) {
-                    	break;
-                    }
+                if (text == null || name == null) {
+                    break;
+                }
                     
-                    if(PhoneBookManager.ContactByName(name) != null) {
+                if(PhoneBookManager.ContactByName(name) != null) {
                     	
-                    	SmsManager.getSMSList().addContentToContact(PhoneBookManager.ContactByName(name), text);
-                    }
-                    else {
+                    SmsManager.getSMSList().addContentToContact(PhoneBookManager.ContactByName(name), text);
+                }
+                else {
                     	
                     	JOptionPane.showMessageDialog(null, name + " does not exist in the phone book.");
-                    }
-                    break;
+                }
+                
+                break;
                     
-                case "Delete Contact messages":
+            case "Delete Contact messages":
                 	
-                    // Open dialog to get contact name
-                    String nameToDelete = JOptionPane.showInputDialog(this, "Enter contact name:");
+                // Open dialog to get contact name
+                String nameToDelete = JOptionPane.showInputDialog(this, "Enter contact name:");
                     
-                    if (nameToDelete == null) {
-                    	break;
-                    }
+                if (nameToDelete == null) {
+                    break;
+                }
                     
-                    // Perform logic to delete the contact messages
-                    if (PhoneBookManager.ContactByName(nameToDelete) != null) {
+                // Perform logic to delete the contact messages
+                if (PhoneBookManager.ContactByName(nameToDelete) != null) {
 						
-                    	SmsManager.getSMSList().deleteAllContentsWithContact(PhoneBookManager.ContactByName(nameToDelete));
-		    }
-		    else {
-			JOptionPane.showMessageDialog(null, nameToDelete + " does not exist in the phone book.");
-		    }
+                    SmsManager.getSMSList().deleteAllContentsWithContact(PhoneBookManager.ContactByName(nameToDelete));
+                }
+		        else {
+		        	JOptionPane.showMessageDialog(null, nameToDelete + " does not exist in the phone book.");
+		        }
                     
+                break;
+                    
+            case "Print Contact messages":
+                	
+                //  Open dialog to get contact name
+                String nameToPrint = JOptionPane.showInputDialog(this, "Enter contact name:");
+                	
+                if (nameToPrint == null) {
                     break;
+                }
                     
-                case "Print Contact messages":
-                	
-                	//  Open dialog to get contact name
-                	String nameToPrint = JOptionPane.showInputDialog(this, "Enter contact name:");
-                	
-                    if (nameToPrint == null) {
-                    	break;
-                    }
-                    
-                    if (PhoneBookManager.ContactByName(nameToPrint) != null) {
+                if (PhoneBookManager.ContactByName(nameToPrint) != null) {
                     	
-                    	// Clear the text area
-                    	SMSTextArea.setText("");
-                    	SmsManager.getSMSList().printAllContentsWithContact(PhoneBookManager.ContactByName(nameToPrint), SMSTextArea);
-		     }
-		    else {
+                    // Clear the text area
+                    SMSTextArea.setText("");
+                    SmsManager.getSMSList().printAllContentsWithContact(PhoneBookManager.ContactByName(nameToPrint), SMSTextArea);
+                }
+                else {
 			
-			JOptionPane.showMessageDialog(null, nameToPrint + " does not exist in the phone book.");
-		    }
+                	JOptionPane.showMessageDialog(null, nameToPrint + " does not exist in the phone book.");
+                }
                    
+                break;
+                    
+            case "Search for a sentence":
+                // Open dialog to get sentence to search
+                String sentence = JOptionPane.showInputDialog(this, "Enter sentence to search:");
+                    
+                if (sentence == null) {
                     break;
+                }
                     
-                case "Search for a sentence":
-                    // Open dialog to get sentence to search
-                    String sentence = JOptionPane.showInputDialog(this, "Enter sentence to search:");
+                // Perform logic to search for the contact
+                // Clear the text area
+                SMSTextArea.setText("");
+                SmsManager.getSMSList().printAllContactContainDesireSentence(sentence, SMSTextArea);
                     
-                    if (sentence == null) {
-                    	break;
-                    }
+                break;
                     
-                    // Perform logic to search for the contact
-                    // Clear the text area
-                    SMSTextArea.setText("");
-                    SmsManager.getSMSList().printAllContactContainDesireSentence(sentence, SMSTextArea);
-                    
-                    break;
-                    
-                case "Print all SMS":
+            case "Print all SMS":
                 	
-                    // Clear the text area
-                    SMSTextArea.setText("");
-                    // Perform logic to sort the phone book by name
-                    SmsManager.getSMSList().printAllSMSList(SMSTextArea);
+                // Clear the text area
+                SMSTextArea.setText("");
+                // Print all Sms
+                SmsManager.getSMSList().printAllSMSList(SMSTextArea);
                 	
-                    break;
       
-            }
-        }
-    }
+          }
+      }
+ }
     
 

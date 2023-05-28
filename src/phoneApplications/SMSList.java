@@ -7,33 +7,36 @@ import javax.swing.JTextArea;
 
 public class SMSList {
 
+	// Data Member
 	private ArrayList<SMS> smsList;
 
-	// Constructor:
+	// Constructor
 	public SMSList() {
 		
 		this.smsList = new ArrayList<SMS>();
 	}
 	
+	// Getter
 	public ArrayList<SMS> getSMSList() {
 		
 		return smsList;
 	}
 	
-	
+	// Check if contact exist in the SMSList
 	private SMS containContact (Contact anyContact) {
 		
-		for (SMS it:this.getSMSList()) {
+		for (SMS iterator : this.getSMSList()) {
 			
-			if (it.getContact().equals(anyContact) == true) {
+			if (iterator.getContact().equals(anyContact) == true) {
 			
-				return it;
+				return iterator;
 			}
 		}
 		
 		return null;
 	}
 	
+	// Add message with contact
 	public void addContentToContact (Contact anyContact , String contentText) {
 		
 		SMS SMSContact = this.containContact (anyContact);
@@ -43,7 +46,7 @@ public class SMSList {
 			SMSContact.addContent(contentText);
 			JOptionPane.showMessageDialog(null, anyContact.getName() + " added.");
 		}
-		// if this is the first content with anyContact
+		// else, this is the first content with anyContact
 		else {
 			
 			this.getSMSList().add(new SMS(anyContact, contentText));
@@ -52,11 +55,14 @@ public class SMSList {
 		
 	}
 	
+	// Remove messages with some contact
 	public void deleteAllContentsWithContact (Contact anyContact) {
 		
+		// If it is null
 		if (anyContact == null) {
 			return;
 		}
+		// Check this contact in list
 		SMS SMSContact = this.containContact (anyContact);
 		
 		if (SMSContact != null ) {
@@ -69,12 +75,14 @@ public class SMSList {
 		JOptionPane.showMessageDialog(null, "There are no any messages from" + anyContact.getName());
 	}
 	
+	// Print the all messages with some contact
 	public void printAllContentsWithContact (Contact anyContact, JTextArea SMSTextArea) {
 		
 		SMS SMSContact = this.containContact (anyContact);
 		
+		// Check this contact in list
 		if (SMSContact != null) {
-			// found anyContact in SMS list
+			// Found , So print.
 			SMSTextArea.append(SMSContact.toString());
 			return;
 		}
@@ -84,27 +92,31 @@ public class SMSList {
 		
 	}
 	
+	// Print all messages with all contacts
 	public void printAllSMSList (JTextArea SMSTextArea) {
 		
 		SMSTextArea.append("SMS:");
 		
-		for (SMS it:this.getSMSList()) {
+		for (SMS iterator : this.getSMSList()) {
 			
-			SMSTextArea.append(it.toString());
+			SMSTextArea.append(iterator.toString());
 		}
 	}
 	
+	// Print all the contacts that their messages contain given sentence 
 	public void printAllContactContainDesireSentence (String sentence, JTextArea SMSTextArea) {
 		
 		ArrayList<Contact> containSentenceContacts = new ArrayList<Contact>();
 		
-		for (SMS it :this.getSMSList()) {
+		// Scan all list
+		for (SMS listIterator :this.getSMSList()) {
 			
-			for (Content iterator:it.getContentList()) {
-				
-				if (iterator.getText().contains(sentence) == true) {
-					
-					containSentenceContacts.add(it.getContact());
+			// scan all messages with current Contact
+			for (Content messagesIterator:listIterator.getContentList()) {
+				// Check if any of this messages contain the sentence
+				if (messagesIterator.getText().contains(sentence) == true) {
+					// Add it to print after
+					containSentenceContacts.add(listIterator.getContact());
 					break;
 				}
 			}

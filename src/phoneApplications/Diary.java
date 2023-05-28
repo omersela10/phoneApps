@@ -38,7 +38,7 @@ public class Diary
 			this.diary.put(newEventDate, newEventList);
 		}
 		// Notify insertion.
-		JOptionPane.showMessageDialog(null,newEvent + "added");
+		JOptionPane.showMessageDialog(null,newEvent + " Added Successfully");
 	}
 	
 	// Remove event from diary
