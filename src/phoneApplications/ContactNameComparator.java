@@ -8,7 +8,7 @@ public class ContactNameComparator implements Comparator<Contact> {
 	@Override
 	public int compare(Contact c1, Contact c2) {
 		 
-		if (c1.getName().equals(c2.getName()) == true) {
+		if (c1.getName().equalsIgnoreCase(c2.getName()) == true) {
 			
 			// If they have the same name, compare by Bigger numeric Phone number
 			Long c1PhoneInt = Long.parseLong(c1.getPhoneNumber());

@@ -71,7 +71,7 @@ public class ContactList {
 		// Check if the contact exist an remove it.
 		for(Contact contact : this.contactList) {
 			
-			if(contact.getName().equals(name) == true) {
+			if(contact.getName().equalsIgnoreCase(name) == true) {
 				// Found and remove
 				anyName = true;
 				this.contactList.remove(contact);
@@ -111,7 +111,7 @@ public class ContactList {
 		// Check if the contact exist.
 		for(Contact contact : this.contactList) {
 			
-			if(contact.getName().equals(name) == true) {
+			if(contact.getName().equalsIgnoreCase(name) == true) {
 				
 				return contact;
 			}
@@ -129,8 +129,8 @@ public class ContactList {
 		// Check if the contact exist an display it.
 		for(Contact contact : this.contactList) {
 			
-			if(contact.getName().equals(name) == true){
-				JOptionPane.showMessageDialog(null, name + " exist in the contact list.");
+			if(contact.getName().equalsIgnoreCase(name) == true){
+				JOptionPane.showMessageDialog(null, contact.toString());
 				return true;
 			}
 	
