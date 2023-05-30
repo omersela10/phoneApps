@@ -136,7 +136,12 @@ public class SMSWindow extends JFrame{
                 // Perform logic to delete the contact messages
                 if (PhoneBookManager.ContactByName(nameToDelete) != null) {
 						
-                    SmsManager.getSMSList().deleteAllContentsWithContact(PhoneBookManager.ContactByName(nameToDelete));
+                    String message = SmsManager.getSMSList().deleteAllContentsWithContact(PhoneBookManager.ContactByName(nameToDelete));
+                    
+                    if (message != "") {
+                    	
+                    	JOptionPane.showMessageDialog(null, message);
+                    }
                 }
 		        else {
 		        	JOptionPane.showMessageDialog(null, nameToDelete + " does not exist in the phone book.");

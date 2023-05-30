@@ -44,35 +44,34 @@ public class SMSList {
 		// If there is a open SMS with the contact person
 		if (SMSContact != null) {
 			SMSContact.addContent(contentText);
-			JOptionPane.showMessageDialog(null, anyContact.getName() + " added.");
+			JOptionPane.showMessageDialog(null, " added message from " + anyContact.getName() );
 		}
 		// else, this is the first content with anyContact
 		else {
 			
 			this.getSMSList().add(new SMS(anyContact, contentText));
-			JOptionPane.showMessageDialog(null, anyContact.getName() + " added.");
+			JOptionPane.showMessageDialog(null, " added messages from " + anyContact.getName() );
 		}
 		
 	}
 	
 	// Remove messages with some contact
-	public void deleteAllContentsWithContact (Contact anyContact) {
+	public String deleteAllContentsWithContact (Contact anyContact) {
 		
 		// If it is null
 		if (anyContact == null) {
-			return;
+			return "";
 		}
 		// Check this contact in list
 		SMS SMSContact = this.containContact (anyContact);
 		
 		if (SMSContact != null ) {
 			this.getSMSList().remove(SMSContact);
-			JOptionPane.showMessageDialog(null, "All the masseges of " + anyContact.getName() + "removed");
-			return;
+			return "All the messages of " + anyContact.getName() + " removed";
 		}
 		
 		// else: not found anyContact in SMS list.
-		JOptionPane.showMessageDialog(null, "There are no any messages from" + anyContact.getName());
+		return "There are no any messages from " + anyContact.getName();
 	}
 	
 	// Print the all messages with some contact
@@ -124,12 +123,12 @@ public class SMSList {
 		
 		if (containSentenceContacts.size() == 0) {
 			
-			SMSTextArea.append("There are no messages with the sentence: " + sentence);
+			SMSTextArea.append("There are no messages with the sentence: " + sentence +"\n");
 		}
 		
 		else {
 			
-			SMSTextArea.append("List of contacts that their SMS contain the sentence:");
+			SMSTextArea.append("List of contacts that their SMS contain the sentence:" + "\n");
 			
 			//print all contact that there SMS contain the sentence
 			for (Contact it:containSentenceContacts) {
