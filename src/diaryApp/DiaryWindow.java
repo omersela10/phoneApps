@@ -1,4 +1,4 @@
-package phoneApplications;
+package diaryApp;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -15,6 +15,10 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import javax.swing.*;
+
+import phoneBookApp.Contact;
+import phoneBookApp.PhoneBookManager;
+
 import java.awt.*;
 import java.util.Calendar;
 import java.util.Date;

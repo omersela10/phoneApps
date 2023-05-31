@@ -1,4 +1,4 @@
-           package phoneApplications;
+           package diaryApp;
 import java.time.*;
 import java.util.*;
 

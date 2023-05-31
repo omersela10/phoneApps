@@ -1,4 +1,4 @@
-package phoneApplications;
+package smsApp;
 import java.awt.BorderLayout;
 
 import java.awt.Dimension;
@@ -12,6 +12,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
+import phoneBookApp.*;
 
 //Window will be Singleton
 public class SMSWindow extends JFrame{

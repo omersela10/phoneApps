@@ -1,6 +1,8 @@
-package phoneApplications;
+package smsApp;
 
 import java.util.ArrayList;
+
+import phoneBookApp.Contact;
 
 public class SMS {
 

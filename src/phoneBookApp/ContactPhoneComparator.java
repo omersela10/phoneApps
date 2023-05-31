@@ -1,4 +1,4 @@
-package phoneApplications;
+package phoneBookApp;
 import java.util.*;
 
 // Implements the interface comparator by Strategy Design Pattern

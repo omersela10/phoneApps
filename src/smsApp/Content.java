@@ -1,4 +1,4 @@
-package phoneApplications;
+package smsApp;
 import java.util.*;
 import java.time.*;
 

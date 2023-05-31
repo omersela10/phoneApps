@@ -1,6 +1,13 @@
 package phoneApplications;
 
 import javax.swing.*;
+
+import diaryApp.*;
+import mediaApp.*;
+import phoneBookApp.*;
+import smsApp.*;
+
+
 import java.awt.*;
 import java.awt.event.*;
 

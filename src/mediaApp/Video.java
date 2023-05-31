@@ -1,4 +1,4 @@
-package phoneApplications;
+package mediaApp;
 
 import java.time.Duration;
 

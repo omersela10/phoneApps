@@ -1,9 +1,11 @@
-package phoneApplications;
+package smsApp;
 
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
+
+import phoneBookApp.Contact;
 
 public class SMSList {
 

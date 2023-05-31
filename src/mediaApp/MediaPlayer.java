@@ -1,8 +1,9 @@
-package phoneApplications;
+package mediaApp;
 import java.util.*;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
+
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;

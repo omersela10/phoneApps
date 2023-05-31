@@ -1,4 +1,4 @@
-package phoneApplications;
+package phoneBookApp;
 
 public interface ContactObservable {
 

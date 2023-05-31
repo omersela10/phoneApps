@@ -1,10 +1,12 @@
-package phoneApplications;
+package diaryApp;
 
 import java.util.*;
 import java.util.Map.Entry;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
+
+import phoneBookApp.Contact;
 
 import java.time.*;
 

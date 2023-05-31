@@ -1,7 +1,8 @@
-package phoneApplications;
+package diaryApp;
 
 import java.util.ArrayList;
-import java.util.Scanner;
+
+import phoneBookApp.*;
 
 //Implements ContactObserver interface to listening of removedContacts in the phone book app
 public class DiaryManager implements ContactObservable{

@@ -1,4 +1,4 @@
-package phoneApplications;
+package mediaApp;
 
 public class MediaManager {
 
