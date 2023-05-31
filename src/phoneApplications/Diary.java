@@ -42,7 +42,7 @@ public class Diary
 	}
 	
 	// Remove event from diary
-	public void removeEvent(Event anyEvent) {
+	public Event removeEvent(Event anyEvent) {
 		
 		// Retrieve the Date from the event
 		LocalDate dateOfEvent = anyEvent.getDateTime().toLocalDate();
@@ -55,15 +55,14 @@ public class Diary
 				
 				if(event.equals(anyEvent) == true) {
 					
-					// Found, so remove and notify
+					// Found, so remove and return it
 					this.diary.get(dateOfEvent).remove(anyEvent);
-					JOptionPane.showMessageDialog(null, "The event has been deleted.");
-					return;
+					return event;
 				}
 			}
 		}
 		// Not found. so notify.
-		JOptionPane.showMessageDialog(null,"The event doesn't exist in the diary and is therefore not deleted.");
+		return null;
 	}
 	
 	// Help method to print the events in given date.

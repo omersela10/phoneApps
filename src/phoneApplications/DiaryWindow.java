@@ -383,7 +383,14 @@ private void addOrRemoveEvent(boolean addOrRemove) {
     	            }
     	            else {
     	            	// Remove it
-    	            	diaryManager.getDiary().removeEvent(new MeetingEvent(theLocalDateTime, meetingDuration, theContact));
+    	            	Event removedEvent = diaryManager.getDiary().removeEvent(new MeetingEvent(theLocalDateTime, meetingDuration, theContact));
+    	            	if(removedEvent == null) {
+    	            		// Notify
+    	            		JOptionPane.showMessageDialog(null,"The event doesn't exist in the diary and is therefore not deleted.");
+    	            	}
+    	            	else {
+    	            		JOptionPane.showMessageDialog(null, "The" + removedEvent.toString() + "has been deleted.");
+    	            	}
     	            }
     	            
     	        } else if (descriptionRadioButton.isSelected() == true) {
@@ -396,7 +403,15 @@ private void addOrRemoveEvent(boolean addOrRemove) {
     	            }
     	            else {
     	            	// Remove it
-    	            	diaryManager.getDiary().removeEvent(new GeneralEvent(theLocalDateTime, meetingDuration, description));
+    	            	Event removedEvent  = diaryManager.getDiary().removeEvent(new GeneralEvent(theLocalDateTime, meetingDuration, description));
+    	            	 if(removedEvent == null) {
+     	            		// Notify
+     	            		JOptionPane.showMessageDialog(null,"The event doesn't exist in the diary and is therefore not deleted.");
+     	            	}
+     	            	else {
+     	            		JOptionPane.showMessageDialog(null, "The" + removedEvent.toString() + "has been deleted.");
+     	            	}
+    	            
     	            }
     	           
     	            

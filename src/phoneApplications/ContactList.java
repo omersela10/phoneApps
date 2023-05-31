@@ -55,7 +55,7 @@ public class ContactList {
 	}
 	
 	// Iterator
-	public Iterator<Contact> getIterator() {
+	private Iterator<Contact> getIterator() {
 		
 		Iterator<Contact> iterator = this.contactList.iterator();
 		return iterator;		
@@ -66,14 +66,13 @@ public class ContactList {
 	// Remove contact
 	public Contact removeContact (String name) {
 		
-		boolean anyName = false;
 		Contact returnContact = null;
 		// Check if the contact exist an remove it.
 		for(Contact contact : this.contactList) {
 			
 			if(contact.getName().equalsIgnoreCase(name) == true) {
+				
 				// Found and remove
-				anyName = true;
 				this.contactList.remove(contact);
 				returnContact = contact;
 				break;
@@ -83,7 +82,7 @@ public class ContactList {
 		
 		
 		// Print result
-		if (anyName == false) {
+		if (returnContact == null) {
 			JOptionPane.showMessageDialog(null, name + " does not exist the contact list.");
 		}
 		else {
@@ -123,8 +122,6 @@ public class ContactList {
     
 	// Search name in the contact list
 	public boolean searchByName (String name) {
-		
-		boolean exist = false;
 		
 		// Check if the contact exist an display it.
 		for(Contact contact : this.contactList) {

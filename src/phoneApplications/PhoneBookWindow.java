@@ -141,7 +141,15 @@ public class PhoneBookWindow extends JFrame {
                 	break;
                 }
                 
-                phoneBookManager.getPhoneBook().searchByName(searchName);
+                Contact foundContact = phoneBookManager.getPhoneBook().searchContactByName(searchName);
+                
+                if(foundContact == null) {
+                	// Not found
+                	JOptionPane.showInputDialog(this, "The Contact" + searchName + "Not Exist in List");
+                }
+                else {
+                	JOptionPane.showInputDialog(this, foundContact.toString());
+                }
                 break;
                 
             case "Sort by Name":
