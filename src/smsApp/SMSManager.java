@@ -4,7 +4,7 @@ package smsApp;
 import phoneBookApp.*;
 
 // Implements ContactObserver interface to listening of removedContacts in the phone book app
-public class SMSManager implements ContactObservable {
+public class SMSManager implements ContactObserver {
 
 	// Data Member
 	private SMSList sms;
@@ -24,7 +24,7 @@ public class SMSManager implements ContactObservable {
 	@Override
 	public void onContactRemoved(Contact anyContact) {
 		
-		this.sms.deleteAllContentsWithContact(anyContact);
+		this.sms.deleteAllMessagesWithContact(anyContact);
 	}
 
 	@Override

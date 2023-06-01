@@ -1,6 +1,6 @@
 package phoneBookApp;
 
-public interface ContactObservable {
+public interface ContactObserver {
 
 	void onContactRemoved(Contact anyContact);
 	boolean isContactExists(Contact anyContact);

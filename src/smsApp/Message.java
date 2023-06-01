@@ -1,25 +1,26 @@
 package smsApp;
 import java.util.*;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 
-public class Content {
+public class Message {
 	
 	// Data Members
 	private String text; 
 	private LocalDateTime time;
 	
 	// Constructors
-	public Content (String anytext) {
+	public Message (String anytext) {
 		
 		this.setText(anytext);
 		this.time = LocalDateTime.now();
 	}
 	
-	public Content (Content otherContent) {
+	public Message (Message otherMessage) {
 		
-		this.setText(otherContent.getText());
-		this.time = otherContent.getTime();
+		this.setText(otherMessage.getText());
+		this.time = otherMessage.getTime();
 	}
 	
 	// Getters
@@ -39,11 +40,15 @@ public class Content {
 		this.text = text;
 	}
 	
+	private String getTimeInFormat() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd - MM - yyyy HH:mm");
+		return this.getTime().format(formatter);
+	}
 	
 	@Override
 	public String toString () {
 		
-		return this.getTime() + ": " + this.getText();
+		return this.getTimeInFormat() + ": " + this.getText();
 		
 	}
 	

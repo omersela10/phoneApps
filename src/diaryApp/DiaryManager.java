@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import phoneBookApp.*;
 
 //Implements ContactObserver interface to listening of removedContacts in the phone book app
-public class DiaryManager implements ContactObservable{
+public class DiaryManager implements ContactObserver{
 	
 	// Data Member
 	private Diary diary;

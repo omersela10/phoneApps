@@ -399,7 +399,12 @@ private void addOrRemoveEvent(boolean addOrRemove) {
     	            
     	        } else if (descriptionRadioButton.isSelected() == true) {
     	            description = descriptionField.getText();
-    	            
+    	   
+    	            if(description.isBlank() == true) {
+    	            	// Notify
+	            		JOptionPane.showMessageDialog(null,"Please insert description");
+    	            	return;
+    	            }
     	            // Check if add or remove
     	            if(addOrRemove == true) {
     	            	// Add it.

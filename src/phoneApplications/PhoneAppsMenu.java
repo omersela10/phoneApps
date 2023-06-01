@@ -13,6 +13,7 @@ import java.awt.event.*;
 
 public class PhoneAppsMenu extends JFrame {
 
+	// Statics members for one instance while running
 	private static PhoneBookManager phoneBookManager;
     private static DiaryManager diaryManager;
     private static SMSManager smsManager;

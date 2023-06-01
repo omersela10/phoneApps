@@ -1,5 +1,6 @@
            package diaryApp;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public abstract class Event 
@@ -37,9 +38,14 @@ public abstract class Event
 		this.meetingDuration = meetingDuration;
 	}
 
+	private String getTimeInFormat() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd - MM - yyyy HH:mm");
+		return this.getDateTime().format(formatter);
+	}
+	
 	@Override
 	public String toString () {
-		return "Date: " + this.getDateTime() + " Duration: " + this.getMeetingDuration().toMinutes() + " Minutes"+ "\n";
+		return "Date: " + this.getTimeInFormat() + " Duration: " + this.getMeetingDuration().toMinutes() + " Minutes"+ "\n";
 	}
 	
 	@Override

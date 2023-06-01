@@ -8,20 +8,20 @@ public class SMS {
 
 	// Data Members
 	private Contact contact;
-	private ArrayList<Content> contentList;
+	private ArrayList<Message> messageList;
 	
 	// Constructors
 	public SMS (Contact contact) {
 		
 		this.setContact(contact);
-		this.contentList = new ArrayList<Content>();
+		this.messageList = new ArrayList<Message>();
 	}
 	
-	public SMS (Contact contact, String anyContentText) {
+	public SMS (Contact contact, String anyMessageText) {
 		
 		this.setContact(contact);
-		this.contentList = new ArrayList<Content>();
-		this.addContent(anyContentText);
+		this.messageList = new ArrayList<Message>();
+		this.addMessage(anyMessageText);
 	}
 	
 
@@ -31,8 +31,8 @@ public class SMS {
 		return contact;
 	}
 
-	public ArrayList<Content> getContentList() {
-		return contentList;
+	public ArrayList<Message> getMessageList() {
+		return messageList;
 	}
 	
 	// Setter
@@ -43,25 +43,24 @@ public class SMS {
 	}
 
 
-	// Add content
-	public void addContent (String anyContentText){
+	// Add message
+	public void addMessage (String anyMessageText){
 		
-		contentList.add ( new Content(anyContentText) );
+		messageList.add ( new Message(anyMessageText) );
 	}
 	
 	@Override
 	public String toString () {
 		
-		String str = "The content with " + this.contact.toString();
+		String str = "The messages with " + this.contact.toString();
 		
-		for (Content content: this.contentList) {
+		for (Message anyMessage: this.messageList) {
 			
-			str += (content.toString() + ".\n");
+			str += (anyMessage.toString() + ".\n");
 		}
 		
 		return  str;
-		
-		
+	
 	}
 
 	

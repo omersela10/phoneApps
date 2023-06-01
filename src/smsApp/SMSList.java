@@ -39,26 +39,26 @@ public class SMSList {
 	}
 	
 	// Add message with contact
-	public void addContentToContact (Contact anyContact , String contentText) {
+	public void addMessageToContact (Contact anyContact , String messageText) {
 		
 		SMS SMSContact = this.containContact (anyContact);
 		
 		// If there is a open SMS with the contact person
 		if (SMSContact != null) {
-			SMSContact.addContent(contentText);
-			JOptionPane.showMessageDialog(null, " added message from " + anyContact.getName() );
+			SMSContact.addMessage(messageText);
+			JOptionPane.showMessageDialog(null, " added message to " + anyContact.getName() );
 		}
-		// else, this is the first content with anyContact
+		// else, this is the first message with anyContact
 		else {
 			
-			this.getSMSList().add(new SMS(anyContact, contentText));
-			JOptionPane.showMessageDialog(null, " added messages from " + anyContact.getName() );
+			this.getSMSList().add(new SMS(anyContact, messageText));
+			JOptionPane.showMessageDialog(null, " added messages to " + anyContact.getName() );
 		}
 		
 	}
 	
 	// Remove messages with some contact
-	public String deleteAllContentsWithContact (Contact anyContact) {
+	public String deleteAllMessagesWithContact (Contact anyContact) {
 		
 		// If it is null
 		if (anyContact == null) {
@@ -69,15 +69,15 @@ public class SMSList {
 		
 		if (SMSContact != null ) {
 			this.getSMSList().remove(SMSContact);
-			return "All the messages of " + anyContact.getName() + " removed";
+			return "All the messages with " + anyContact.getName() + " removed";
 		}
 		
 		// else: not found anyContact in SMS list.
-		return "There are no any messages from " + anyContact.getName();
+		return "There are no any messages with " + anyContact.getName();
 	}
 	
 	// Print the all messages with some contact
-	public void printAllContentsWithContact (Contact anyContact, JTextArea SMSTextArea) {
+	public void printAllMessagesWithContact (Contact anyContact, JTextArea SMSTextArea) {
 		
 		SMS SMSContact = this.containContact (anyContact);
 		
@@ -89,7 +89,7 @@ public class SMSList {
 		}
 		
 		// else: not found anyContact in SMS list
-		SMSTextArea.append("There are no any messages from" + anyContact.getName());
+		SMSTextArea.append("There are no any messages with " + anyContact.getName());
 		
 	}
 	
@@ -113,7 +113,7 @@ public class SMSList {
 		for (SMS listIterator :this.getSMSList()) {
 			
 			// scan all messages with current Contact
-			for (Content messagesIterator:listIterator.getContentList()) {
+			for (Message messagesIterator : listIterator.getMessageList()) {
 				// Check if any of this messages contain the sentence
 				if (messagesIterator.getText().contains(sentence) == true) {
 					// Add it to print after
@@ -130,7 +130,7 @@ public class SMSList {
 		
 		else {
 			
-			SMSTextArea.append("List of contacts that their SMS contain the sentence:" + "\n");
+			SMSTextArea.append("List of contacts that their SMS contain the sentence: " + "\n");
 			
 			//print all contact that there SMS contain the sentence
 			for (Contact it:containSentenceContacts) {

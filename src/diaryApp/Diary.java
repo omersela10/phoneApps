@@ -201,6 +201,11 @@ public class Diary
 		// Get the all events of given contact
 		ArrayList<Event> allEventsOfSomeContact = allEventsWithGivenContact(anyContact);
 		
+		if(allEventsOfSomeContact.size () == 0) {
+			// Notify there are no event with this contact
+			JOptionPane.showMessageDialog(null,"There are no meeting with " + anyContact.getName());
+			return;
+		}
 		// Print this events.
 		for(Event event : allEventsOfSomeContact) {
 			diaryTextArea.append(event.toString());
@@ -253,7 +258,7 @@ public class Diary
 		    // Compare the date time of current to the total time of previous
 		    if (currentEventDateTime.compareTo(totalDateTimeOfPrevious) < 0) {
 		        // Collision found, delete the last one (current)
-		    	this.removeEvent(currentEvent);
+		    	current.remove();
 		    }
 		    else {
 		    	// No collision found, update previous.
