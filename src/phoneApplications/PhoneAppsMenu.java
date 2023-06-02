@@ -11,6 +11,15 @@ import smsApp.*;
 import java.awt.*;
 import java.awt.event.*;
 
+
+// Group Serial Number: 1
+
+// Ahigad Genish  316228022
+// Omer Sela      316539535	
+// Shir Cohen     314624040
+// Almog Sharoni  208611764 
+// Yakov Avitan   205517089
+
 public class PhoneAppsMenu extends JFrame {
 
 	// Statics members for one instance while running
