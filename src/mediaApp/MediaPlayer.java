@@ -36,7 +36,7 @@ public class MediaPlayer {
 		// Iterate over the media list
 		for(Media anyMedia: this.getMediaPlayer()) {
 			// Search for this media with given name
-			if(anyMedia.getMediaName().equals(anyName) == true) {
+			if(anyMedia.getMediaName().equalsIgnoreCase(anyName) == true) {
 				return anyMedia;
 			}
 		}

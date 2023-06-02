@@ -10,7 +10,7 @@ public class ContactPhoneComparator implements Comparator<Contact> {
 		 
 		if (c1.getPhoneNumber().equals(c2.getPhoneNumber()) == true) {
 			// If they have the same phone number, Compare by Alphabetic name order
-			return c1.getName().compareTo(c2.getName());	
+			return c1.getName().compareToIgnoreCase(c2.getName());	
 		}
 		else {
 			// Else - compare by Bigger numeric Phone number

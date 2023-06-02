@@ -17,7 +17,7 @@ public class ContactNameComparator implements Comparator<Contact> {
 		}
 		else {
 			// Else - compare by Alphabetic order
-			return c1.getName().compareTo(c2.getName());
+			return c1.getName().compareToIgnoreCase(c2.getName());
 		}
 	}
 

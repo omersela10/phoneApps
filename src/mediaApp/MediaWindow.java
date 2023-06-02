@@ -235,7 +235,7 @@ public class MediaWindow extends JFrame{
 		
 		// Open dialog to get mediaName details and retrieve the media name for play
 	    String mediaName = JOptionPane.showInputDialog(this, "Enter Media Name:");   	    
-		if(mediaName == null) {
+		if(mediaName.isBlank() == true) {
 			return;
 		}
 			
