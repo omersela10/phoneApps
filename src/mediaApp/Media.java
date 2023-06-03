@@ -7,7 +7,6 @@ public abstract class Media {
 	// Data Members
 	protected String mediaName;
 	protected Duration mediaDuration;
-//	protected String mediaType;
 	
 	// Constructor
 	public Media(String newMediaName, Duration newMediaDuration) {
